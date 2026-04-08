@@ -1,0 +1,968 @@
+﻿/* -------------------- IMPORT FONT -------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Poppins:wght@300;400;500&display=swap');
+
+html, body {
+    padding-top: 20px;
+    background: #FFF3EC;
+    font-family: 'Poppins', sans-serif;
+    color: #898989;
+}
+
+/* -------------------- HEADER -------------------- */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Montserrat', sans-serif;
+    padding: 12px 30px 8px 30px;
+    background: #FFF3EC;
+    font-size: 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 2000;
+    box-sizing: border-box;
+}
+
+/* -------------------- LOGO -------------------- */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 20px;
+    font-weight: normal;
+    color: #000000;
+}
+
+.logo-img {
+    height: 40px;
+    width: auto;
+}
+
+/* -------------------- MENU -------------------- */
+.menu {
+    position: relative;
+    z-index: 1100;
+    display: inline-flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.menu-title {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-weight: 500;
+    font-size: 18px;
+    color: #000000;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.menu:hover .menu-title {
+    font-weight: 500; 
+    color: #ffffff;
+}
+
+.menu .dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    transform: translateX(10%);
+    background-color: #EB7831;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-radius: 10px;
+    min-width: 240px;
+    overflow: hidden;
+    z-index: 1200;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+    text-align: center;
+}
+
+    .menu .dropdown li {
+        padding: 0;
+    }
+
+        .menu .dropdown li a {
+            color: #ffffff;
+            text-decoration: none;
+            display: block;
+            width: 100%;
+            padding: 11px 20px; 
+            box-sizing: border-box;
+            transition: background 0.3s ease, color 0.3s ease;
+            text-align: center;
+            white-space: nowrap; 
+            font-weight: 500;
+        }
+
+        .menu .dropdown li:hover a {
+            background-color: #9C6F1A;
+            color: #000000;
+            font-weight: 700;
+        }
+
+.menu:hover .dropdown {
+    display: block;
+}
+
+.menu-arrow {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+    display: inline-block;
+    transition: transform 0.3s ease, filter 0.3s ease;
+
+}
+
+.menu:hover .menu-arrow {
+    transform: rotate(180deg);
+    filter: brightness(0) invert(1);
+}
+
+/* -------------------- HERO -------------------- */
+.hero {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 40px 0px 40px;
+}
+
+/* -------------------- ABOUT -------------------- */
+.about {
+    width: 56%;
+    padding: 5px;
+    align-items: center;
+}
+
+    .about h2 {
+        text-align: center;
+        color: #EB7831;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 32px;
+    }
+
+    .about p {
+        text-align: justify;
+        font-size: 16px;
+        line-height: 1.5;
+    }
+
+/* -------------------- TITLE -------------------- */
+.title {
+    width: 40%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    padding: 25px 0px 0px 0px;
+}
+
+    .title h1 {
+        color: #EB7831;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 48px;
+        letter-spacing: 1.5px;
+        margin: 0;
+    }
+
+    .title p {
+        font-family: 'Poppins', sans-serif;
+        font-size: 24px;
+        margin-top: 30px;
+    }
+
+/* -------------------- CONTACT -------------------- */
+.contact {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    font-size: 16px;
+}
+
+    .contact p {
+        margin: 0px 0;
+    }
+
+.info-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+    .info-wrapper a {
+        display: inline-block;
+    }
+
+.extra-icon {
+    height: 65px;
+    width: auto;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+    .extra-icon:hover {
+        transform: scale(1.2);
+    }
+
+.btn {
+    font-size: 16px;
+    width: 40%;
+    padding: 5px 30px;
+    border: 1px solid #EB7831;
+    background: transparent;
+    color: #EB7831;
+    font-family: 'Poppins';
+    cursor: pointer;
+    transition: 0.3s;
+    border-radius: 8px;
+}
+
+    .btn:hover {
+        background: #EB7831;
+        color: white;
+    }
+
+/* -------------------- SHOWCASE SECTION -------------------- */
+.showcase-section {
+    background: white;
+    padding: 0px 0 30px 0;
+}
+
+    .showcase-section h2 {
+        text-align: center;
+        color: #EB7831;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 32px;
+        margin: 0 0 30px 0;
+    }
+
+/* -------------------- PROFICIENCY -------------------- */
+.proficiency-wrapper h2 {
+    text-align: center;
+    color: #EB7831;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 40px;
+    margin: 0;
+    padding: 40px 0 20px 0;
+}
+
+.software-grid {
+    display: grid;
+    grid-template-columns: repeat(8, 65px);
+    justify-content: center;
+    gap: 75px;
+    margin: 30px;
+}
+
+.software-item {
+    width: 65px;
+    height: 65px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    .software-item img {
+        width: 65px;
+        height: 65px;
+        object-fit: contain;
+        display: block;
+    }
+
+/* -------------------- PORTFOLIO -------------------- */
+.portfolio-preview h2 {
+    text-align: center;
+    color: #EB7831;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 40px;
+    letter-spacing: 1px;
+    padding: 40px 0 35px 0;
+}
+
+.portfolio-content {
+    display: grid;
+    grid-template-columns: 2.5fr 0.825fr;
+    align-items: flex-start;
+    width: 95%;
+    padding-left: 45px;
+    padding-bottom: 50px;
+}
+
+/* -------------------- CAROUSEL -------------------- */
+.carousel-box {
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.carousel {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border: 1px solid #EB7831;
+    border-radius: 25px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    background: #f2f2f2;
+}
+
+.carousel-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+}
+
+    .carousel-slide.active {
+        opacity: 1;
+        z-index: 1;
+    }
+
+    .carousel-slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+.carousel-caption {
+    text-align: center;
+    font-size: 13px;
+    margin-top: 10px;
+    color: #898989;
+}
+
+.carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.carousel-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #D9D9D9;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+    .carousel-dot.active {
+        background: #EB7831;
+        transform: scale(1.1);
+    }
+
+.carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 3;
+    width: 44px;
+    height: 44px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 243, 236, 0.88);
+    color: #EB7831;
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+    transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.carousel-box:hover .carousel-arrow {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+    .carousel-arrow:hover {
+        background: #EB7831;
+        color: white;
+    }
+
+    .carousel-arrow.prev {
+        left: 14px;
+    }
+
+    .carousel-arrow.next {
+        right: 14px;
+    }
+
+/* -------------------- PORTFOLIO TEXT -------------------- */
+.portfolio-text {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+    .portfolio-text p {
+        margin-top: 0;
+        margin-bottom: 20px;
+        text-align: justify;
+        font-size: 19px;
+        line-height: 1.25;
+        color: #000000;
+    }
+
+/* -------------------- RESPONSIVE -------------------- */
+@media (max-width: 1200px) {
+    .software-grid {
+        grid-template-columns: repeat(6, 1fr);
+    }
+}
+
+@media (max-width: 900px) {
+    .container {
+        width: 88%;
+    }
+
+    .portfolio-content {
+        grid-template-columns: 1fr;
+    }
+
+    .software-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .software-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .showcase-section h2 {
+        font-size: 26px;
+    }
+}
+
+/* -------------------- CARD -------------------- */
+.card-wrapper {
+    display: block;
+    padding: 16px;
+    text-decoration: none;
+}
+
+.card {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 25px;
+    border: 1px solid #EB7831;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    transition: transform 0.3s ease;
+    container-type: inline-size;
+}
+
+    .card img {
+        width: 100%;
+        height: auto;
+        display: block;
+        transition: transform 0.4s ease, filter 0.4s ease;
+    }
+
+.overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(255,243,236,0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background 0.4s ease;
+    padding: 16px;
+    text-align: center;
+}
+
+    .overlay span {
+        color: #EB7831;
+        font-size: 26px;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 700;
+        letter-spacing: clamp(1px, 0.35cqw, 2px);
+        line-height: 1.15;
+        text-transform: uppercase;
+        opacity: 0;
+        transition: opacity 0.4s ease;
+        text-align: center;
+    }
+
+.card:hover {
+    transform: translateY(-6px);
+}
+
+    .card:hover img {
+        transform: scale(1.08);
+        filter: brightness(0.85);
+    }
+
+    .card:hover .overlay {
+        background: rgba(255,243,236,0.9);
+    }
+
+        .card:hover .overlay span {
+            opacity: 1;
+        }
+/* -------------------- GRID -------------------- */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 20px;
+    padding: 20px;
+}
+
+#card1, #card2 {
+    grid-column: span 3;
+}
+
+#card3, #card4, #card5 {
+    grid-column: span 2;
+}
+
+#card6 {
+    grid-column: 3 / span 2;
+}
+
+/* -------------------- PROJECTS -------------------- */
+.projects {
+    background: white;
+    padding-top: 0px;
+}
+
+.container {
+    width: 64%;
+    margin: 0 auto;
+}
+
+hr {
+    border: none;
+    border-top: 2px solid #EB7831;
+    margin: 10px 40px;
+}
+
+/* -------------------- FIX GENERALI -------------------- */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+.card-wrapper {
+    display: block;
+    padding: 16px;
+    text-decoration: none;
+}
+
+/* =========================================
+   2) DESKTOP INTERMEDIO
+   1910 -> 1024
+   ========================================= */
+@media (max-width: 1910px) {
+    .container {
+        width: min(86%, 1200px);
+    }
+
+    .header {
+        padding: 12px 24px 8px 24px;
+    }
+
+    .logo {
+        gap: 14px;
+        font-size: clamp(18px, 1vw, 20px);
+    }
+
+    .menu-title {
+        font-size: clamp(16px, 0.95vw, 18px);
+    }
+
+    .title h1,
+    .hero-title {
+        font-size: clamp(42px, 3vw, 48px);
+    }
+
+    .title p {
+        font-size: clamp(21px, 1.6vw, 24px);
+    }
+
+    .about p,
+    .portfolio-text p,
+    .overview-text,
+    .overview-quote,
+    .contribution-list li {
+        font-size: clamp(17px, 1.05vw, 19px);
+    }
+
+    .portfolio-content {
+        gap: clamp(20px, 2vw, 28px);
+    }
+
+    .card-grid {
+        gap: 18px;
+    }
+
+    .overlay {
+        padding: 16px;
+    }
+
+        .overlay span {
+            font-size: clamp(12px, 6cqw, 25px);
+            letter-spacing: 1px;
+            text-align: center;
+            padding: 0 12px;
+        }
+}
+
+/* -------------------- TABLET -------------------- */
+@media (max-width: 1024px) {
+    .container {
+        width: 88%;
+        align-items: center;
+    }
+
+    .carousel-box {
+        width: 100%;
+    }
+
+    .hero {
+        gap: 30px;
+    }
+
+    .title h1 {
+        font-size: 40px;
+    }
+
+    .title p {
+        font-size: 22px;
+    }
+
+    .software-grid {
+        grid-template-columns: repeat(4, 65px);
+        gap: 35px;
+    }
+    /* PORTFOLIO */
+    .portfolio-content {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        padding-left: 0;
+        padding-bottom: 30px;
+        gap: 20px;
+    }
+
+    .portfolio-text {
+        width: 100%;
+        align-items: center;
+    }
+
+        .portfolio-text p {
+            text-align: center;
+        }
+
+    .card-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    #card1, #card2, #card3, #card4, #card5, #card6 {
+        grid-column: span 1;
+    }
+}
+
+/* -------------------- MOBILE -------------------- */
+@media (max-width: 768px) {
+    html, body {
+        padding-top: 0;
+    }
+
+    body {
+        background: #FFF3EC;
+    }
+
+    .container {
+        width: 92%;
+    }
+
+    /* HEADER */
+    .header {
+        position: static;
+        flex-direction: column;
+        gap: 12px;
+        padding: 18px 16px 14px 16px;
+        text-align: center;
+    }
+
+    .logo {
+        justify-content: center;
+        gap: 10px;
+        font-size: 17px;
+        flex-wrap: wrap;
+    }
+
+    .logo-img {
+        height: 34px;
+    }
+
+    .menu {
+        width: 100%;
+    }
+
+    .menu-title {
+        font-size: 16px;
+    }
+
+    .menu .dropdown {
+        position: static;
+        transform: none;
+        margin-top: 8px;
+        min-width: unset;
+        width: 100%;
+        border-radius: 12px;
+    }
+
+    /* HERO */
+    .hero {
+        display: flex;
+        flex-direction: column;
+        padding: 20px 0 0 0;
+        gap: 12px;
+    }
+
+    .title {
+        order: 1;
+        width: 100%;
+        padding: 0;
+        text-align: center;
+    }
+
+        .title h1 {
+            font-size: 34px;
+            line-height: 1.1;
+            letter-spacing: 1px;
+        }
+
+        .title p {
+            margin-top: 10px;
+            font-size: 20px;
+        }
+
+    .about {
+        order: 2;
+        width: 100%;
+        padding: 0;
+    }
+
+        .about h2 {
+            font-size: 26px;
+            margin-bottom: 14px;
+        }
+
+        .about p {
+            font-size: 15px;
+            line-height: 1.7;
+            text-align: left;
+        }
+
+    /* CONTACT */
+    .contact {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 18px;
+        padding: 18px 0 24px 0;
+    }
+
+    .info-wrapper {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .extra-icon {
+        height: 72px;
+    }
+
+    .info {
+        text-align: center;
+    }
+
+        .info p {
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+    .btn {
+        width: 100%;
+        max-width: 280px;
+        padding: 12px 20px;
+        font-size: 16px;
+    }
+
+    /* SECTIONS */
+    .showcase-section,
+    .projects {
+        padding-top: 0;
+    }
+
+        .showcase-section h2,
+        .proficiency-wrapper h2,
+        .portfolio-preview h2 {
+            font-size: 28px;
+            padding: 24px 0 18px 0;
+            margin-bottom: 10px;
+        }
+
+    hr {
+        margin: 12px 0;
+    }
+
+    /* SOFTWARE GRID */
+    .software-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 22px;
+        margin: 24px 0;
+        justify-items: center;
+    }
+
+    .software-item,
+    .software-item img {
+        width: 58px;
+        height: 58px;
+    }
+
+    .carousel-box {
+        width: 100%;
+    }
+
+    .carousel {
+        border-radius: 18px;
+    }
+
+    .carousel-caption {
+        font-size: 14px;
+        margin-top: 12px;
+    }
+
+    .carousel-dots {
+        margin-top: 10px;
+    }
+
+    .carousel-arrow {
+        opacity: 1;
+        pointer-events: auto;
+        width: 38px;
+        height: 38px;
+        font-size: 22px;
+    }
+
+        .carousel-arrow.prev {
+            left: 8px;
+        }
+
+        .carousel-arrow.next {
+            right: 8px;
+        }
+
+    .portfolio-text {
+        width: 100%;
+        align-items: center;
+    }
+
+        .portfolio-text p {
+            font-size: 16px;
+            line-height: 1.6;
+            text-align: left;
+            margin-bottom: 14px;
+        }
+
+    /* CARDS */
+    .card-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+        padding: 10px 0 30px 0;
+    }
+
+    #card1, #card2, #card3, #card4, #card5, #card6 {
+        grid-column: auto;
+    }
+
+    .card {
+        border-radius: 18px;
+    }
+
+    .overlay span {
+        font-size: 20px;
+        letter-spacing: 1px;
+        text-align: center;
+        padding: 0 12px;
+    }
+}
+
+/* -------------------- SMALL MOBILE -------------------- */
+@media (max-width: 480px) {
+    .logo {
+        font-size: 15px;
+    }
+
+    .title h1 {
+        font-size: 29px;
+    }
+
+    .title p {
+        font-size: 18px;
+    }
+
+    .about h2,
+    .showcase-section h2,
+    .proficiency-wrapper h2,
+    .portfolio-preview h2 {
+        font-size: 24px;
+    }
+
+    .about p,
+    .portfolio-text p,
+    .info p {
+        font-size: 14px;
+    }
+
+    .software-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 18px;
+    }
+
+    .software-item,
+    .software-item img {
+        width: 54px;
+        height: 54px;
+    }
+
+    .carousel-arrow {
+        width: 34px;
+        height: 34px;
+        font-size: 20px;
+    }
+
+    .btn {
+        font-size: 15px;
+    }
+
+    .overlay span {
+        font-size: 18px;
+    }
+}

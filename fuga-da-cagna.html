@@ -1,109 +1,145 @@
-﻿document.querySelectorAll('.menu').forEach(menu => {
-    const dropdown = menu.querySelector('.dropdown');
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    menu.addEventListener('mouseenter', () => {
-        dropdown.style.display = 'block';
-        dropdown.style.left = '0';
-        dropdown.style.right = 'auto';
+    <title>Fuga Da Cag'Na</title>
+    <link rel="stylesheet" href="css/projectstyle.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Macondo&display=swap" rel="stylesheet">
+    <link rel="icon" href="https://imgur.com/U4tnwDA.jpg" type="image/jpeg">
+</head>
 
-        const rect = dropdown.getBoundingClientRect();
-        const windowWidth = window.innerWidth;
-        const margin = 5; 
+<body style="
+  --color-bg: #232548;
+  --color-accent: #ffb200;
+  --color-accent-dark: #cc8e00;
+  --color-text: #222222;
+  --font-main: 'Macondo', cursive;
+  --hero-image: url('https://i.imgur.com/Lw7LTzy.jpg');
+">
+    <!-- HEADER -->
+    <header class="header">
+        <div class="logo">
+            <img src="https://imgur.com/Wj6mNnL.jpg" alt="Logo" class="logo-img">
+            TommasoStrozziPortfolio
+        </div>
+        <div class="menu">
+            <span class="menu-title">
+                Fuga Da Cag'Na
+                <img src="https://imgur.com/wrdDKF8.png" alt="Arrow Icon" class="menu-arrow">
+            </span>
+            <ul class="dropdown">
+                <li><a href="index.html">Portfolio</a></li>
+                <li><a href="straight-thoughts.html">Straight Thoughts</a></li>
+                <li><a href="until-you-make-it.html">...Until You Make It</a></li>
+                <li><a href="handys-wander.html">Handy's Wander</a></li>
+                <li><a href="a-mannequin-tale.html">A Mannequin Tale</a></li>
+                <li><a href="gloom-district.html">Gloom District</a></li>
+            </ul>
+        </div>
+    </header>
 
-        if (rect.right > windowWidth - margin) {
-            dropdown.style.left = 'auto';
-            dropdown.style.right = margin + 'px';
-        }
-    });
+    <!-- HERO -->
+    <section class="hero-spacer"></section>
 
-    menu.addEventListener('mouseleave', () => {
-        dropdown.style.display = 'none';
-        dropdown.style.left = '';
-        dropdown.style.right = '';
-    });
-});
+    <section class="hero-banner">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Fuga Da Cag'Na</h1>
 
-document.addEventListener("DOMContentLoaded", function () {
-    const slides = document.querySelectorAll("#portfolioCarousel .carousel-slide");
-    const dots = document.querySelectorAll("#carouselDots .carousel-dot");
-    const caption = document.getElementById("carouselCaption");
-    const prevButton = document.getElementById("prevSlide");
-    const nextButton = document.getElementById("nextSlide");
+                <div class="hero-nav">
+                    <a href="handys-wander.html">&#60;</a>
+                    <a href="index.html">Portfolio</a>
+                    <a href="gloom-district.html">&#62;</a>
+                </div>
 
-    let currentSlide = 0;
-    const intervalTime = 4000;
-    let autoSlide;
+                <div class="roles-row">
+                    <img src="https://imgur.com/ko8rBDe.jpg" alt="Logo progetto" class="roles-logo">
+                    <p class="roles-text">
+                        <strong>Roles:</strong>
+                        🖥️Programmer,💡Game Designer,📊Level Designer,<br/>📜Narrative Designer
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    function showSlide(index) {
-        slides.forEach((slide, i) => {
-            slide.classList.toggle("active", i === index);
-        });
+    <!-- CONTENT -->
+    <section class="project-section">
+        <div class="container">
 
-        dots.forEach((dot, i) => {
-            dot.classList.toggle("active", i === index);
-        });
+            <section class="overview-section">
+                <h2 class="section-title">Overview:</h2>
+                <p class="overview-text">
+                    The game presents itself as an action platformer inspired by the first book of the Aeneid, featuring predominantly absurd and comedic narrative elements.
+                </p>
+            </section>
 
-        caption.textContent = slides[index].dataset.title || "";
-        currentSlide = index;
-    }
+            <section class="content-preview">
+                <div class="portfolio-content">
 
-    function nextSlide() {
-        const next = (currentSlide + 1) % slides.length;
-        showSlide(next);
-    }
+                    <div class="carousel-box">
+                        <div class="carousel" id="portfolioCarousel">
+                            <button class="carousel-arrow prev" id="prevSlide" aria-label="Immagine precedente">&#10094;</button>
+                            <button class="carousel-arrow next" id="nextSlide" aria-label="Immagine successiva">&#10095;</button>
 
-    function prevSlide() {
-        const prev = (currentSlide - 1 + slides.length) % slides.length;
-        showSlide(prev);
-    }
+                            <div class="carousel-slide">
+                                <img src="https://i.imgur.com/bW3fssO.jpg">
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="https://i.imgur.com/0XB52HM.jpg">
+                            </div>
 
-    function startAutoSlide() {
-        autoSlide = setInterval(nextSlide, intervalTime);
-    }
+                            <div class="carousel-slide">
+                                <img src="https://i.imgur.com/Lw7LTzy.jpg">
+                            </div>
 
-    function resetAutoSlide() {
-        clearInterval(autoSlide);
-        startAutoSlide();
-    }
+                            <div class="carousel-slide">
+                                <img src="https://i.imgur.com/OiSx7tT.jpg">
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="https://i.imgur.com/gMr8r0L.jpg">
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="https://i.imgur.com/U3d4drN.jpg">
+                            </div>
+                        </div>
 
-    dots.forEach((dot) => {
-        dot.addEventListener("click", function () {
-            const index = parseInt(this.dataset.slide, 10);
-            showSlide(index);
-            resetAutoSlide();
-        });
-    });
+                        <div class="carousel-caption" id="carouselCaption">Fuga Da Cag'Na</div>
 
-    if (nextButton) {
-        nextButton.addEventListener("click", function () {
-            nextSlide();
-            resetAutoSlide();
-        });
-    }
+                        <div class="carousel-dots" id="carouselDots">
+                            <span class="carousel-dot active" data-slide="0"></span>
+                            <span class="carousel-dot" data-slide="1"></span>
+                            <span class="carousel-dot" data-slide="2"></span>
+                            <span class="carousel-dot" data-slide="3"></span>
+                            <span class="carousel-dot" data-slide="4"></span>
+                            <span class="carousel-dot" data-slide="5"></span>
+                        </div>
+                    </div>
 
-    if (prevButton) {
-        prevButton.addEventListener("click", function () {
-            prevSlide();
-            resetAutoSlide();
-        });
-    }
+                    <div class="text-column">
+                        <h2 class="contribution-title">Main contributions:</h2>
+                        <ul class="contribution-list">
+                            <li>Programmed a basic custom dialogue system for the game.</li>
+                            <li>Designed and implemented the framework of main menu and pause menu UI.</li>
+                            <li>Co-designed and implemented many of the game’s main mechanics.</li>
+                            <li>Co-wrote the game’s story.</li>
+                            <li>Designed and built the game’s levels.</li>
+                            <li>Designed the scenes setup.</li>
+                            <li>Designed and implemented enemy AI using a combination of behavior trees and custom scripting.</li>
+                        </ul>
+                    </div>
 
-    showSlide(currentSlide);
-    startAutoSlide();
-});
+                </div>
+            </section>
 
-document.addEventListener("DOMContentLoaded", () => {
-    const header = document.querySelector(".header");
-    const limit = 100; // quando "arrivi al limite sopra"
+            <hr class="section-divider">
+        </div>
+    </section>
 
-    function handleScroll() {
-        if (window.scrollY <= limit) {
-            header.classList.add("transparent");   // sopra → trasparente
-        } else {
-            header.classList.remove("transparent"); // sotto → normale
-        }
-    }
-
-    handleScroll(); // stato iniziale
-    window.addEventListener("scroll", handleScroll);
-});
+    <script src="js/script.js"></script>
+</body>
+</html>
