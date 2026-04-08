@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Gloom District</title>
+    <link rel="stylesheet" href="css/projectstyle.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="https://imgur.com/U4tnwDA.jpg" type="image/jpeg">
+</head>
+
+<body style="
+  --color-bg: #ffffffff;
+  --color-accent: #ffffff;
+  --color-accent-dark: #cccccc;
+  --color-text: #ffffff;
+  --project-bg: #000000;
+  --color-hero-text: #000000;
+
+  --font-main: 'Anonymous Pro', sans-serif;
+  --hero-image: url('https://i.imgur.com/hUgYOsC.jpg');
+">
+    <!-- HEADER -->
+    <header class="header">
+        <div class="logo">
+            <img src="https://imgur.com/Wj6mNnL.jpg" alt="Logo" class="logo-img">
+            TommasoStrozziPortfolio
+        </div>
+        <div class="menu">
+            <span class="menu-title">
+                Gloom District
+                <img src="https://imgur.com/wrdDKF8.png" alt="Arrow Icon" class="menu-arrow">
+            </span>
+            <ul class="dropdown">
+                <li><a href="index.html">Portfolio</a></li>
+                <li><a href="straight-thoughts.html">Straight Thoughts</a></li>
+                <li><a href="until-you-make-it.html">...Until You Make It</a></li>
+                <li><a href="handys-wander.html">Handy's Wander</a></li>
+                <li><a href="fuga-da-cagna.html">Fuga Da Cag'Na</a></li>
+                <li><a href="a-mannequin-tale.html">A Mannequin Tale</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero-spacer"></section>
+
+    <section class="hero-banner">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Gloom District</h1>
+
+                <div class="hero-nav">
+                    <a href="fuga-da-cagna.html">&#60;</a>
+                    <a href="index.html">Portfolio</a>
+                    <a href="straight-thoughts.html">&#62;</a>
+                </div>
+
+                <div class="roles-row">
+                    <img src="https://imgur.com/ko8rBDe.jpg" alt="Logo progetto" class="roles-logo">
+                    <p class="roles-text">
+                        <strong>Roles:</strong>
+                        🖥️Programmer,💡Game Designer
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="project-section">
+        <div class="container">
+
+            <section class="overview-section">
+                <h2 class="section-title">Overview:</h2>
+                <p class="overview-text">
+                    A 2D point-and-click mystery game with branching dialogue and puzzle-solving mechanics.
+                    <br><br>
+                    The player uses the mouse to navigate the environment, interact with objects and solve logic-based puzzles and minigames to progress through the narrative.
+                    <br><br>
+                    The game features a character-switching system, allowing the player to alternate between the Detective and the Killer using the space bar.
+                    The two characters exist in separate timelines, and information discovered in one perspective is required to solve puzzles and advance in the other.
+                </p>
+            </section>
+
+            <section class="content-preview">
+                <div class="portfolio-content">
+                    <div class="carousel-box">
+                        <div class="carousel" id="portfolioCarousel">
+                            <button class="carousel-arrow prev" id="prevSlide" aria-label="Immagine precedente">&#10094;</button>
+                            <button class="carousel-arrow next" id="nextSlide" aria-label="Immagine successiva">&#10095;</button>
+
+                            <div class="carousel-slide">
+                                <img src="https://i.imgur.com/rjk9Ffn.jpg">
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="https://i.imgur.com/O6MrGcb.jpg">
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="https://i.imgur.com/TGSAowB.jpg">
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="https://i.imgur.com/hUgYOsC.jpg">
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="https://i.imgur.com/Z71lxHI.jpg">
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="https://i.imgur.com/9BQlKta.jpg">
+                            </div>
+                        </div>
+
+                        <div class="carousel-caption" id="carouselCaption">Gloom District</div>
+
+                        <div class="carousel-dots" id="carouselDots">
+                            <span class="carousel-dot active" data-slide="0"></span>
+                            <span class="carousel-dot" data-slide="1"></span>
+                            <span class="carousel-dot" data-slide="2"></span>
+                            <span class="carousel-dot" data-slide="3"></span>
+                            <span class="carousel-dot" data-slide="4"></span>
+                            <span class="carousel-dot" data-slide="5"></span>
+                        </div>
+                        <a href="https://samval.itch.io/gloom-district" class="play-btn" target="_blank">Play it!</a>
+                    </div>
+
+                    <div class="text-column">
+                        <h2 class="contribution-title">Main contributions:</h2>
+                        <ul class="contribution-list">
+                            <li>Co-designed and implemented the game’s main mechanics.</li>
+                            <li>Programmed puzzles throughout the game.</li>
+                            <li>Implemented the game’s levels.</li>
+                            <li>Implemented animations using the Animator.</li>
+                            <li>Edited a custom pathfinding system.</li>
+                        </ul>
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                    </div>
+                </div>
+            </section>
+
+            <hr class="section-divider">
+        </div>
+    </section>
+    <script src="js/script.js"></script>
+</body>
+</html>
