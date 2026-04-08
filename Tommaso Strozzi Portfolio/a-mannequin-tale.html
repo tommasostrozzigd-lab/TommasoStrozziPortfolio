@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>A Mannequin Tale</title>
+    <link rel="stylesheet" href="css/projectstyle.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="icon" href="https://imgur.com/U4tnwDA.jpg" type="image/jpeg">
+</head>
+
+<body style="
+  --color-bg: #1E1E1E;
+  --color-accent: #FB922B;
+  --color-accent-dark: #E57E1F;
+  --color-text: #222222;
+  --font-main: 'Lato', sans-serif;
+  --hero-image: url('https://imgur.com/tdetvVC.jpg');
+">
+    <!-- HEADER -->
+    <header class="header">
+        <div class="logo">
+            <img src="https://imgur.com/Wj6mNnL.jpg" alt="Logo" class="logo-img">
+            TommasoStrozziPortfolio
+        </div>
+        <div class="menu">
+            <span class="menu-title">
+                A Mannequin Tale
+                <img src="https://imgur.com/wrdDKF8.png" alt="Arrow Icon" class="menu-arrow">
+            </span>
+            <ul class="dropdown">
+                <li><a href="index.html">Portfolio</a></li>
+                <li><a href="straight-thoughts.html">Straight Thoughts</a></li>
+                <li><a href="until-you-make-it.html">...Until You Make It</a></li>
+                <li><a href="handys-wander.html">Handy's Wander</a></li>
+                <li><a href="fuga-da-cagna.html">Fuga Da Cag'Na</a></li>
+                <li><a href="gloom-district.html">Gloom District</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero-spacer"></section>
+
+    <section class="hero-banner">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">A Mannequin Tale</h1>
+
+                <div class="hero-nav">
+                    <a href="straight-thoughts.html">&#60;</a>
+                    <a href="index.html">Portfolio</a>
+                    <a href="until-you-make-it.html">&#62;</a>
+                </div>
+
+                <div class="roles-row">
+                    <img src="https://imgur.com/hMfB88m.jpg" alt="Logo progetto" class="roles-logo">
+                    <p class="roles-text">
+                        <strong>Roles:</strong>
+                        🖥️Programmer ,💡Game Designer,📊Level Designer
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTENT -->
+    <section class="project-section">
+        <div class="container">
+
+            <section class="overview-section">
+                <h2 class="section-title">Overview:</h2>
+                <p class="overview-text">
+                    A Mannequin Tale is a 3D platformer featuring a ragdoll-based movement system. The experience places a strong emphasis on player precision and reaction time, requiring accurate timing and spatial awareness to successfully navigate each level.
+                </p>
+            </section>
+
+            <!-- PRIMA SEZIONE -->
+            <section class="content-preview">
+                <div class="portfolio-content">
+
+                    <!-- VIDEO 1 AL POSTO DEL CAROSELLO DI SOPRA -->
+                    <div class="carousel-box">
+                        <div class="video-box">
+                            <iframe src="https://www.youtube-nocookie.com/embed/F_3HjSEWbZM"
+                                    title="YouTube video player"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    allowfullscreen
+                                    referrerpolicy="strict-origin-when-cross-origin">
+                            </iframe>
+                        </div>
+
+                        <a href="https://fiorebuddha.itch.io/a-mannequin-tale" class="play-btn" target="_blank">
+                            Play it!
+                        </a>
+                    </div>
+
+                    <!-- MAIN CONTRIBUTIONS DI SOPRA RESTA QUI -->
+                    <div class="text-column">
+                        <h2 class="contribution-title">Main contributions:</h2>
+                        <ul class="contribution-list">
+                            <li>Co-designed the main game mechanics.</li>
+                            <li>Designed, built, and tested some of the levels</li>
+                            <li>Designed most of the obstacles handling their</li>
+                            <li>creation and implementation in the game.</li>
+                            <li>Customized the driving system to meet the project’s specific requirements.</li>
+                            <li>Designed custom Blueprint methods to optimize game performance.</li>
+                        </ul>
+                        <br />
+                        <br />
+                        <br />
+                    </div>
+
+                </div>
+            </section>
+
+            <hr class="section-divider">
+
+            <!-- SECONDA SEZIONE -->
+            <section class="content-preview">
+                <div class="portfolio-content">
+
+                    <!-- VIDEO 2 AL POSTO DEL CAROSELLO DI SOTTO -->
+                    <div class="carousel-box">
+                        <div class="video-box-2">
+                            <iframe src="https://www.youtube-nocookie.com/embed/7JmI_Tr10-s"
+                                    title="YouTube video player"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    allowfullscreen
+                                    referrerpolicy="strict-origin-when-cross-origin">
+                            </iframe>
+                        </div>
+
+                        <p style="text-align: center; margin: 0 0 35px 0; line-height: 1;">
+                            A speedrun of the game
+                        </p>
+                    </div>
+
+                    <!-- IL MAIN CONTRIBUTION DI SOTTO DIVENTA IL CAROSELLO -->
+                            <div class="carousel-box">
+                                <div class="carousel" id="portfolioCarousel">
+                                    <button class="carousel-arrow prev" id="prevSlide" aria-label="Immagine precedente">&#10094;</button>
+                                    <button class="carousel-arrow next" id="nextSlide" aria-label="Immagine successiva">&#10095;</button>
+
+                                    <div class="carousel-slide">
+                                        <img src="https://i.imgur.com/fH90xXa.jpg" alt="Screenshot 1">
+                                    </div>
+                                    <div class="carousel-slide">
+                                        <img src="https://i.imgur.com/KrLvsUf.jpg" alt="Screenshot 2">
+                                    </div>
+                                    <div class="carousel-slide">
+                                        <img src="https://i.imgur.com/tdetvVC.jpg" alt="Screenshot 3">
+                                    </div>
+                                    <div class="carousel-slide">
+                                        <img src="https://i.imgur.com/iNM7DYr.jpg" alt="Screenshot 4">
+                                    </div>
+                                    <div class="carousel-slide">
+                                        <img src="https://i.imgur.com/xnFDkZ8.jpg" alt="Screenshot 5">
+                                    </div>
+                                </div>
+
+                                <div class="carousel-caption" id="carouselCaption">A Mannequin Tale</div>
+
+                                <div class="carousel-dots" id="carouselDots">
+                                    <span class="carousel-dot active" data-slide="0"></span>
+                                    <span class="carousel-dot" data-slide="1"></span>
+                                    <span class="carousel-dot" data-slide="2"></span>
+                                    <span class="carousel-dot" data-slide="3"></span>
+                                    <span class="carousel-dot" data-slide="4"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </section>
+    <script src="js/script.js"></script>
+</body>
+</html>
