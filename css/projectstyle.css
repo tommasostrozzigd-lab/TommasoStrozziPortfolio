@@ -8,12 +8,11 @@ html, body {
 }
 
 body {
-    background: #ffffff;
+    background: transparent;
     color: var(--color-text, #222222);
     position: relative;
 }
 
-    /* immagine fissa in alto, dietro al sito */
     body::before {
         content: "";
         position: fixed;
@@ -21,11 +20,21 @@ body {
         left: 0;
         width: 100%;
         height: 47.27vh;
-        background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), var(--hero-image) center center;
+        background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), var(--hero-image);
+        background-position: center center;
         background-size: cover;
-        z-index: -1;
+        background-repeat: no-repeat;
+        z-index: 0;
         filter: blur(0.5px);
+        pointer-events: none;
     }
+
+.header,
+.hero-banner,
+.project-section {
+    position: relative;
+    z-index: 1;
+}
     /* se NON c'è color-hero-text → freccia bianca */
     body:not([style*="--color-hero-text"]) .menu-arrow {
         filter: brightness(0) invert(1);
