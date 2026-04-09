@@ -43,6 +43,7 @@ body {
 .container {
     width: 60.5%;
     margin: 0 auto;
+    text-transform: uppercase;
 }
 
 /* -------------------- HEADER -------------------- */
@@ -53,8 +54,8 @@ body {
 .header {
     display: flex;
     justify-content: space-between;
+    font-family: "Montserrat", sans-serif;
     align-items: center;
-    font-family: 'Montserrat', sans-serif;
     padding: 12px 30px 8px 30px;
     background: var(--color-bg, #1E1B4B);
     color: var(--color-hero-text, #ffffff);
@@ -143,7 +144,7 @@ body {
             text-decoration: none;
             display: block;
             width: 100%;
-            padding: 11px 20px;
+            padding: 10px 20px;
             box-sizing: border-box;
             transition: background 0.3s ease, color 0.3s ease;
             text-align: center;
