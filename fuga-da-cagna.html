@@ -11,8 +11,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <style>
         @font-face {
-            font-family: "ArtGreco";
-            src: url("fonts/ArtGreco.ttf") format("truetype");
+            font-family: "DIOGENES";
+            src: url("fonts/DIOGENES.ttf") format("truetype");
         }
     </style>
     <link rel="icon" href="img/U4tnwDA - Imgur.png" type="image/jpeg">
@@ -23,7 +23,7 @@
   --color-accent: #ffb200;
   --color-accent-dark: #cc8e00;
   --color-text: #222222;
-  --font-main: 'ArtGreco', cursive;
+  --font-main: 'DIOGENES', cursive;
   --hero-image: url('../img/Lw7LTzy - Imgur.png');
 ">
     <!-- HEADER -->
@@ -89,42 +89,45 @@
 
                     <div class="carousel-box">
                         <div class="carousel" id="portfolioCarousel">
-                            <button class="carousel-arrow prev" id="prevSlide" aria-label="Immagine precedente">&#10094;</button>
-                            <button class="carousel-arrow next" id="nextSlide" aria-label="Immagine successiva">&#10095;</button>
+                            <div class="carousel-track" id="carouselTrack">
 
-                            <div class="carousel-slide">
-                                <img src="img/bW3fssO - Imgur.png">
+                                <button class="carousel-arrow prev" id="prevSlide" aria-label="Immagine precedente">&#10094;</button>
+                                <button class="carousel-arrow next" id="nextSlide" aria-label="Immagine successiva">&#10095;</button>
+
+                                <div class="carousel-slide">
+                                    <img src="img/bW3fssO - Imgur.png">
+                                </div>
+                                <div class="carousel-slide">
+                                    <img src="img/0XB52HM - Imgur.png">
+                                </div>
+
+                                <div class="carousel-slide">
+                                    <img src="img/Lw7LTzy - Imgur.png">
+                                </div>
+
+                                <div class="carousel-slide">
+                                    <img src="img/OiSx7tT - Imgur.png">
+                                </div>
+                                <div class="carousel-slide">
+                                    <img src="img/gMr8r0L - Imgur.png">
+                                </div>
+                                <div class="carousel-slide">
+                                    <img src="img/U3d4drN - Imgur.png">
+                                </div>
                             </div>
-                            <div class="carousel-slide">
-                                <img src="img/0XB52HM - Imgur.png">
                             </div>
 
-                            <div class="carousel-slide">
-                                <img src="img/Lw7LTzy - Imgur.png">
-                            </div>
+                            <div class="carousel-caption" id="carouselCaption">Fuga Da Cag'Na</div>
 
-                            <div class="carousel-slide">
-                                <img src="img/OiSx7tT - Imgur.png">
-                            </div>
-                            <div class="carousel-slide">
-                                <img src="img/gMr8r0L - Imgur.png">
-                            </div>
-                            <div class="carousel-slide">
-                                <img src="img/U3d4drN - Imgur.png">
+                            <div class="carousel-dots" id="carouselDots">
+                                <span class="carousel-dot active" data-slide="0"></span>
+                                <span class="carousel-dot" data-slide="1"></span>
+                                <span class="carousel-dot" data-slide="2"></span>
+                                <span class="carousel-dot" data-slide="3"></span>
+                                <span class="carousel-dot" data-slide="4"></span>
+                                <span class="carousel-dot" data-slide="5"></span>
                             </div>
                         </div>
-
-                        <div class="carousel-caption" id="carouselCaption">Fuga Da Cag'Na</div>
-
-                        <div class="carousel-dots" id="carouselDots">
-                            <span class="carousel-dot active" data-slide="0"></span>
-                            <span class="carousel-dot" data-slide="1"></span>
-                            <span class="carousel-dot" data-slide="2"></span>
-                            <span class="carousel-dot" data-slide="3"></span>
-                            <span class="carousel-dot" data-slide="4"></span>
-                            <span class="carousel-dot" data-slide="5"></span>
-                        </div>
-                    </div>
 
                     <div class="text-column">
                         <h2 class="contribution-title">Main contributions:</h2>
