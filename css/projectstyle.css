@@ -405,7 +405,7 @@ body {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    z-index: 3;
+    z-index: 10;
     width: 44px;
     height: 44px;
     border: none;
@@ -474,6 +474,39 @@ body {
     border: 0;
     display: block;
 }
+
+.video-box,
+.video-box-2 {
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+    .video-box:hover,
+    .video-box-2:hover {
+        transform: scale(1.03);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+    }
+
+    .video-box iframe,
+    .video-box-2 iframe {
+        pointer-events: none;
+    }
+
+    .video-box:hover iframe,
+    .video-box-2:hover iframe {
+        pointer-events: auto;
+    }
+
+/* ==================== CAROUSEL HOVER ZOOM ==================== */
+.carousel {
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+    will-change: transform;
+}
+
+    .carousel:hover {
+        transform: scale(1.03);
+        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.25);
+        z-index: 5;
+    }
 
 /* -------------------- BUTTON -------------------- */
 .play-btn {
@@ -619,6 +652,35 @@ body {
 .contribution-title,
 .logo {
     overflow-wrap: anywhere;
+}
+
+/* ==================== BUTTON HOVER SCALE ==================== */
+.play-btn,
+.hero-nav a,
+.hero-nav button,
+.carousel-arrow {
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+    .play-btn:hover,
+    .hero-nav a:hover,
+    .hero-nav button:hover {
+        transform: scale(1.06);
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+    }
+
+    /* Frecce leggermente meno aggressive */
+    .carousel-arrow:hover {
+        transform: translateY(-50%) scale(1.15);
+    }
+
+    .play-btn,
+.hero-nav a,
+.hero-nav button,
+.carousel-arrow,
+.video-box,
+.video-box-2 {
+    will-change: transform;
 }
 
 /* -------------------- LARGE TABLET -------------------- */

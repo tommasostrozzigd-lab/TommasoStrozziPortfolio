@@ -55,18 +55,15 @@ document.addEventListener("DOMContentLoaded", () => {
         .filter(Boolean)
         .forEach(slide => slide.classList.add("clone"));
 
-    // In coda: prima, seconda
     track.appendChild(firstClone);
     if (secondClone) track.appendChild(secondClone);
 
-    // In testa: penultima, ultima
-    // Per ottenere [penultima, ultima, ...] bisogna inserire prima l'ultima e poi la penultima
     track.insertBefore(lastClone, track.firstChild);
     if (secondLastClone) track.insertBefore(secondLastClone, track.firstChild);
 
     const allSlides = Array.from(track.querySelectorAll(".carousel-slide"));
 
-    let currentSlide = 2; // prima slide reale
+    let currentSlide = 2; 
     let autoSlide = null;
     const intervalTime = 4000;
 
@@ -99,16 +96,26 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function setPosition(animated = true) {
-        track.classList.toggle("dragging", !animated);
+        if (animated) {
+            track.classList.remove("dragging");
+
+            track.offsetHeight;
+
+        } else {
+            track.classList.add("dragging");
+        }
+
         currentTranslate = -currentSlide * getSlideWidth();
         prevTranslate = currentTranslate;
         track.style.transform = `translateX(${currentTranslate}px)`;
+
         updateDots();
         updateCaption();
     }
 
     function goToSlide(index) {
-        if (isTransitioning) return;
+        if (isDragging) return;
+
         isTransitioning = true;
         currentSlide = index;
         setPosition(true);
@@ -149,13 +156,6 @@ document.addEventListener("DOMContentLoaded", () => {
         return 0;
     }
 
-    function animation() {
-        track.style.transform = `translateX(${currentTranslate}px)`;
-        if (isDragging) {
-            animationId = requestAnimationFrame(animation);
-        }
-    }
-
     function dragStart(e) {
         if (isTransitioning) return;
         if (e.type === "mousedown" && e.button !== 0) return;
@@ -169,8 +169,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function dragMove(e) {
         if (!isDragging) return;
+
         const currentPosition = getPositionX(e);
-        currentTranslate = prevTranslate + (currentPosition - startX);
+        const delta = currentPosition - startX;
+
+        const maxDrag = (getSlideWidth()/100) * 90;
+
+        const clampedDelta = Math.max(-maxDrag, Math.min(maxDrag, delta));
+
+        currentTranslate = prevTranslate + clampedDelta;
+
+        track.style.transform = `translateX(${currentTranslate}px)`;
+
     }
 
     function dragEnd() {
@@ -182,17 +192,22 @@ document.addEventListener("DOMContentLoaded", () => {
         const movedBy = currentTranslate - prevTranslate;
         const threshold = getSlideWidth() * 0.15;
 
+        isTransitioning = false;
+
         if (movedBy < -threshold) {
             goToSlide(currentSlide + 1);
         } else if (movedBy > threshold) {
             goToSlide(currentSlide - 1);
         } else {
-            setPosition(true);
+            setPosition(false);
             startAutoSlide();
         }
     }
 
     track.addEventListener("transitionend", () => {
+        isTransitioning = false;
+        startAutoSlide();
+
         if (currentSlide >= allSlides.length - 2) {
             currentSlide = 2;
             setPosition(false);
@@ -202,9 +217,6 @@ document.addEventListener("DOMContentLoaded", () => {
             currentSlide = totalSlides + 1;
             setPosition(false);
         }
-
-        isTransitioning = false;
-        startAutoSlide();
     });
 
     dots.forEach((dot, i) => {
@@ -257,20 +269,19 @@ const slider = document.getElementById("softwareSlider");
 const track = document.getElementById("softwareTrack");
 
 if (slider && track) {
-    // Duplica gli elementi per creare un loop fluido
     track.innerHTML += track.innerHTML;
 
     let position = 0;
-    let autoSpeed = 0.45; // velocità automatica base
-    let currentVelocity = 0; // velocità attuale per il momentum
+    let autoSpeed = 0.45;
+    let currentVelocity = 0; 
     let isDragging = false;
     let startX = 0;
     let startPosition = 0;
     let lastX = 0;
     let lastTime = 0;
 
-    const friction = 0.9; // più basso = si ferma prima
-    const minVelocity = 0.02; // soglia sotto cui si ferma il momentum
+    const friction = 0.9; 
+    const minVelocity = 0.02; 
 
     function getTrackHalfWidth() {
         return track.scrollWidth / 2;
@@ -329,7 +340,7 @@ if (slider && track) {
         const deltaTime = now - lastTime;
 
         if (deltaTime > 0) {
-            currentVelocity = deltaX / deltaTime * 16; // adattato a ~60fps
+            currentVelocity = deltaX / deltaTime * 16; 
         }
 
         lastX = clientX;
@@ -342,7 +353,6 @@ if (slider && track) {
         isDragging = false;
     }
 
-    // Mouse
     slider.addEventListener("mousedown", (e) => {
         startDrag(e.clientX);
     });
@@ -353,7 +363,6 @@ if (slider && track) {
 
     window.addEventListener("mouseup", endDrag);
 
-    // Touch
     slider.addEventListener("touchstart", (e) => {
         startDrag(e.touches[0].clientX);
     }, { passive: true });
@@ -364,7 +373,6 @@ if (slider && track) {
 
     slider.addEventListener("touchend", endDrag);
 
-    // Rallenta leggermente quando entri sopra
     slider.addEventListener("mouseenter", () => {
         autoSpeed = 0.18;
     });
