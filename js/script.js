@@ -31,7 +31,7 @@
 
 
     /* =========================
-       CAROUSEL INFINITO FIX STABILE
+       CAROUSEL
     ========================= */
 
     const carousel = document.getElementById("portfolioCarousel");
@@ -51,12 +51,7 @@
 
     const slides = Array.from(track.querySelectorAll(".carousel-slide"));
     const total = slides.length;
-
     if (!total) return;
-
-    /* =========================
-       CLONI (1 + 1)
-    ========================= */
 
     const firstClone = slides[0].cloneNode(true);
     const lastClone = slides[total - 1].cloneNode(true);
@@ -133,11 +128,6 @@
         }
     });
 
-
-    /* =========================
-       DRAG FIX + 90% LIMIT + SAFE RELEASE
-    ========================= */
-
     function getX(e) {
         return e.touches ? e.touches[0].clientX : e.clientX;
     }
@@ -149,8 +139,6 @@
         startX = getX(e);
 
         track.style.transition = "none";
-
-        // 🚫 blocca iframe
         setIframesPointerEvents(false);
     }
 
@@ -170,6 +158,7 @@
 
         track.style.transform = `translateX(${currentTranslate}px)`;
     }
+
     function endDrag() {
         if (!isDragging) return;
 
@@ -182,11 +171,9 @@
         else if (moved > threshold) prevSlide();
         else setPosition(true);
 
-        // ✅ riattiva iframe
         setIframesPointerEvents(true);
     }
 
-    /* 🔥 FIX FONDAMENTALE: rilascio anche fuori viewport */
     window.addEventListener("mouseup", endDrag);
     window.addEventListener("touchend", endDrag);
 
@@ -204,11 +191,6 @@
         });
     }
 
-
-    /* =========================
-       IMMAGINI (NO CONFLITTO DRAG)
-    ========================= */
-
     slides.forEach((slide, i) => {
         const img = slide.querySelector("img");
         if (!img) return;
@@ -222,11 +204,6 @@
             if (!isDragging && !isAnimating) openModal(i);
         });
     });
-
-
-    /* =========================
-       DOTS + BUTTONS
-    ========================= */
 
     nextButton?.addEventListener("click", nextSlide);
     prevButton?.addEventListener("click", prevSlide);
@@ -242,11 +219,6 @@
     window.addEventListener("resize", () => setPosition(false));
 
     setPosition(false);
-
-
-    /* =========================
-       MODAL FIX (CLICK OUTSIDE CLOSE)
-    ========================= */
 
     let modalIndex = 0;
 
@@ -273,9 +245,7 @@
     closeModal?.addEventListener("click", closeModalFn);
 
     modal?.addEventListener("click", (e) => {
-        if (e.target === modal) {
-            closeModalFn();
-        }
+        if (e.target === modal) closeModalFn();
     });
 
     modalImg?.addEventListener("click", e => e.stopPropagation());
@@ -283,7 +253,6 @@
     modalNext?.addEventListener("click", nextImage);
     modalPrev?.addEventListener("click", prevImage);
 
-    /* 🔥 FRECCE ESENTI DAL BLOCCO DRAG */
     document.addEventListener("keydown", e => {
         if (!modal.classList.contains("active")) return;
 
@@ -294,7 +263,7 @@
 
 
     /* =========================
-       SOFTWARE SLIDER (UNCHANGED)
+       SOFTWARE SLIDER (MOMENTUM FIXED)
     ========================= */
 
     const slider = document.getElementById("softwareSlider");
@@ -307,13 +276,15 @@
         let autoSpeed = 0.45;
         let currentVelocity = 0;
         let isSoftDragging = false;
+
         let startX = 0;
         let startPosition = 0;
+
         let lastX = 0;
         let lastTime = 0;
 
-        const friction = 0.9;
-        const minVelocity = 0.02;
+        const friction = 0.92;
+        const minVelocity = 0.01;
 
         function halfWidth() {
             return softTrack.scrollWidth / 2;
@@ -347,16 +318,29 @@
             isSoftDragging = true;
             startX = x;
             startPosition = position;
+
+            lastX = x;
+            lastTime = Date.now();
+            currentVelocity = 0;
         }
 
         function move(x) {
             if (!isSoftDragging) return;
+
+            const now = Date.now();
+            const dx = x - lastX;
+            const dt = now - lastTime || 1;
+
+            currentVelocity = (dx / dt) * 16;
 
             const delta = x - startX;
             position = startPosition + delta;
 
             normalize();
             softTrack.style.transform = `translateX(${position}px)`;
+
+            lastX = x;
+            lastTime = now;
         }
 
         function end() {
