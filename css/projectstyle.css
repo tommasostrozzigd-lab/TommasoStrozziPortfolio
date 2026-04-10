@@ -449,6 +449,85 @@ body {
     right: 14px;
 }
 
+.carousel-modal {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0);
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.35s ease;
+    z-index: 99999;
+}
+
+    .carousel-modal.active {
+        background: rgba(0,0,0,0.95);
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+/* 👇 QUESTO è il contenuto vero */
+.modal-content {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 90vw;
+    max-height: 90vh;
+}
+/* immagine */
+.modal-image {
+    max-width: 90vw;
+    max-height: 85vh;
+    object-fit: contain;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+}
+
+/* X */
+.close-modal {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    font-size: 42px;
+    color: white;
+    cursor: pointer;
+    z-index: 100001;
+}
+
+/* FRECCE - FIX RESPONSIVE */
+.modal-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 243, 236, 0.92);
+    color: var(--color-hero-text, var(--color-accent, #FF4DA6));
+    font-size: 28px;
+    cursor: pointer;
+    transition: 0.25s;
+    z-index: 100001;
+}
+
+    .modal-arrow:hover {
+        background: var(--color-hero-text, var(--color-accent, #FF4DA6));
+        color: white;
+        transform: translateY(-50%) scale(1.1);
+    }
+
+    .modal-arrow.prev {
+        left: 24px;
+    }
+
+    .modal-arrow.next {
+        right: 24px;
+    }
+
 .video-box {
     position: relative;
     width: 100%;
@@ -1051,6 +1130,31 @@ body {
     .section-divider {
         margin: 22px 0;
     }
+}
+
+.modal-arrow {
+    width: 42px;
+    height: 42px;
+    font-size: 22px;
+}
+
+    .modal-arrow.prev {
+        left: 10px;
+    }
+
+    .modal-arrow.next {
+        right: 10px;
+    }
+
+.close-modal {
+    top: 10px;
+    right: 12px;
+    font-size: 34px;
+}
+
+.modal-image {
+    max-width: 94vw;
+    max-height: 78vh;
 }
 
 /* -------------------- SMALL MOBILE -------------------- */

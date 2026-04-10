@@ -277,7 +277,6 @@ html, body {
     padding: 18px 0;
     cursor: default; 
     
-    /* 👇 FADE AI LATI */
     -webkit-mask-image: linear-gradient(to right,
         transparent 0%,
         black 10%,
@@ -482,6 +481,87 @@ html, body {
 .carousel-arrow:hover {
     transform: translateY(-50%) scale(1.15);
 }
+
+.carousel-modal {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0);
+    opacity: 0;
+    pointer-events: none;
+    backdrop-filter: blur(6px);
+    transition: 0.35s ease;
+    z-index: 99999;
+}
+
+    .carousel-modal.active {
+        background: rgba(0,0,0,0.95);
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+/* 👇 QUESTO è il contenuto vero */
+.modal-content {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 90vw;
+    max-height: 90vh;
+}
+
+/* immagine */
+.modal-image {
+    max-width: 90vw;
+    max-height: 85vh;
+    object-fit: contain;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+}
+
+/* X */
+.close-modal {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    font-size: 42px;
+    color: white;
+    cursor: pointer;
+    z-index: 100001;
+}
+
+/* FRECCE - FIX RESPONSIVE */
+.modal-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 243, 236, 0.92);
+    color: #EB7831;
+    font-size: 28px;
+    cursor: pointer;
+    transition: 0.25s;
+    z-index: 100001;
+}
+
+.modal-arrow:hover {
+    background: #EB7831;
+    color: white;
+    transform: translateY(-50%) scale(1.1);
+}
+
+.modal-arrow.prev {
+    left: 24px;
+}
+
+.modal-arrow.next {
+    right: 24px;
+}  
 
 /* ==================== CAROUSEL HOVER ZOOM ==================== */
 .carousel {
