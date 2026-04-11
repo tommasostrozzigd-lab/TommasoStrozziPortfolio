@@ -625,14 +625,27 @@ html, body {
 }
 
 /* -------------------- CARD -------------------- */
+
+.projects h2 {
+    text-align: center;
+    color: #EB7831;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 40px;
+    letter-spacing: 1px;
+    margin: 0;
+    padding: 0px 0 20px 0;
+}
+
 .card-wrapper {
     display: block;
     padding: 16px;
     text-decoration: none;
 }
+
 .card {
     position: relative;
     width: 100%;
+    aspect-ratio: 16 / 9;
     overflow: hidden;
     border-radius: 25px;
     border: 1px solid #EB7831;
@@ -642,22 +655,28 @@ html, body {
     will-change: transform;
 }
 
-    .card:hover {
-        transform: translateY(-6px) scale(1.03);
-        box-shadow: 0 14px 30px rgba(0,0,0,0.18);
+    .card a {
+        -webkit-user-drag: none;
+        user-drag: none;
     }
 
-    .card img {
-        width: 100%;
-        height: auto;
-        display: block;
-        transition: transform 0.4s ease, filter 0.4s ease;
-    }
+.card:hover {
+    transform: translateY(-6px) scale(1.03);
+    box-shadow: 0 14px 30px rgba(0,0,0,0.18);
+}
 
-    .card:hover img {
-        transform: scale(1.08);
-        filter: brightness(0.85);
-    }
+.card img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+.card:hover img {
+    transform: scale(1.08);
+    filter: brightness(0.85);
+}
+
 .overlay {
     position: absolute;
     inset: 0;
@@ -670,26 +689,91 @@ html, body {
     text-align: center;
 }
 
-    .overlay span {
-        color: #EB7831;
-        font-size: 26px;
-        font-family: 'Montserrat', sans-serif;
-        font-weight: 700;
-        letter-spacing: clamp(1px, 0.35cqw, 2px);
-        line-height: 1.15;
-        text-transform: uppercase;
-        opacity: 0;
-        transition: opacity 0.4s ease;
-        text-align: center;
-    }
+.overlay span {
+    color: #EB7831;
+    font-size: 26px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    letter-spacing: clamp(1px, 0.35cqw, 2px);
+    line-height: 1.15;
+    text-transform: uppercase;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
 
-    .card:hover .overlay {
-        background: rgba(255,243,236,0.9);
-    }
+.card:hover .overlay {
+    background: rgba(255,243,236,0.9);
+}
 
-        .card:hover .overlay span {
-            opacity: 1;
-        }
+.card:hover .overlay span {
+    opacity: 1;
+}
+
+/* SLIDER */
+.cards-slider {
+    width: 80%;
+    margin: 0 auto;
+    overflow: hidden;
+    position: relative;
+
+    -webkit-mask-image: linear-gradient(
+        to right,
+        transparent 0%,
+        black 10%,
+        black 90%,
+        transparent 100%
+    );
+    mask-image: linear-gradient(
+        to right,
+        transparent 0%,
+        black 10%,
+        black 90%,
+        transparent 100%
+    );
+
+    cursor: grab;
+}
+
+.cards-track {
+    display: flex;
+    gap: 24px;
+    align-items: stretch;
+    will-change: transform;
+
+}
+
+.card-wrapper {
+    flex: 0 0 300px;
+    transition: transform 0.35s ease, opacity 0.35s ease;
+}
+
+.cards-track.dragging {
+    cursor: grabbing;
+}
+
+.cards-slider .overlay span {
+    font-size: 18px;
+    letter-spacing: 0.5px;
+    line-height: 1.2;
+    padding: 0 10px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1910px) {
+    .card-wrapper { flex: 0 0 280px; }
+}
+
+@media (max-width: 1024px) {
+    .card-wrapper { flex: 0 0 230px; }
+}
+
+@media (max-width: 768px) {
+    .cards-slider { width: 92%; }
+    .cards-track { gap: 14px; }
+    .card-wrapper { flex: 0 0 80%; }
+}
+
+
 /* -------------------- GRID -------------------- */
 .card-grid {
     display: grid;
@@ -804,343 +888,353 @@ img {
             text-align: center;
             padding: 0 12px;
         }
-}
 
-/* -------------------- TABLET -------------------- */
-@media (max-width: 1024px) {
-    .container {
-        width: 88%;
-        align-items: center;
-    }
-
-    .carousel-box {
-        width: 100%;
-    }
-
-    .hero {
-        gap: 30px;
-    }
-
-    .title h1 {
-        font-size: 40px;
-    }
-
-    .title p {
-        font-size: 22px;
-    }
-
-    .software-item {
-        width: 100px;
-        height: 100px;
-        padding: 12px;
-    }
-
-    .portfolio-content {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        padding-left: 0;
-        padding-bottom: 30px;
-        gap: 20px;
-    }
-
-    .portfolio-text {
-        width: 100%;
-        align-items: center;
-    }
-
-        .portfolio-text p {
-            text-align: center;
-        }
-
-    .card-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    #card1, #card2, #card3, #card4, #card5, #card6 {
-        grid-column: span 1;
-    }
-}
-
-/* -------------------- MOBILE -------------------- */
-@media (max-width: 768px) {
-    html, body {
-        padding-top: 0;
-    }
-
-    body {
-        background: #FFF3EC;
-    }
-
-    .container {
+    .cards-slider {
         width: 92%;
     }
 
-    /* HEADER */
-    .header {
-        position: static;
-        flex-direction: column;
-        gap: 12px;
-        padding: 18px 16px 14px 16px;
-        text-align: center;
-    }
-
-    .logo {
-        justify-content: center;
-        gap: 10px;
-        font-size: 17px;
-        flex-wrap: wrap;
-    }
-
-    .logo-img {
-        height: 34px;
-    }
-
-    .menu {
-        width: 100%;
-    }
-
-    .menu-title {
-        font-size: 16px;
-    }
-
-    .menu .dropdown {
-        position: static;
-        transform: none;
-        margin-top: 8px;
-        min-width: unset;
-        width: 100%;
-        border-radius: 12px;
-    }
-
-    /* HERO */
-    .hero {
-        display: flex;
-        flex-direction: column;
-        padding: 20px 0 0 0;
-        gap: 12px;
-    }
-
-    .title {
-        order: 1;
-        width: 100%;
-        padding: 0;
-        text-align: center;
-    }
-
-        .title h1 {
-            font-size: 34px;
-            line-height: 1.1;
-            letter-spacing: 1px;
-        }
-
-        .title p {
-            margin-top: 10px;
-            font-size: 20px;
-        }
-
-    .about {
-        order: 2;
-        width: 100%;
-        padding: 0;
-    }
-
-        .about h2 {
-            font-size: 26px;
-            margin-bottom: 14px;
-        }
-
-        .about p {
-            font-size: 15px;
-            line-height: 1.7;
-            text-align: left;
-        }
-
-    /* CONTACT */
-    .contact {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        gap: 18px;
-        padding: 18px 0 24px 0;
-    }
-
-    .info-wrapper {
-        flex-direction: column;
-        gap: 12px;
-    }
-
-    .extra-icon {
-        height: 72px;
-    }
-
-    .info {
-        text-align: center;
-    }
-
-        .info p {
-            font-size: 15px;
-            line-height: 1.6;
-        }
-
-    .btn {
-        width: 100%;
-        max-width: 280px;
-        padding: 12px 20px;
-        font-size: 16px;
-    }
-
-    /* SECTIONS */
-    .showcase-section,
-    .projects {
-        padding-top: 0;
-    }
-
-        .showcase-section h2,
-        .proficiency-wrapper h2,
-        .portfolio-preview h2 {
-            font-size: 28px;
-            padding: 24px 0 18px 0;
-            margin-bottom: 10px;
-        }
-
-    hr {
-        margin: 12px 0;
-    }
-
-    .software-item {
-        width: 82px;
-        height: 82px;
-        padding: 10px;
-        border-radius: 14px;
-    }
-
-    .software-track {
+    .cards-track {
         gap: 14px;
     }
 
-    .software-item img {
-        width: 58px;
-        height: 58px;
-    }
-
-    .carousel-box {
-        width: 100%;
-    }
-
-    .carousel {
-        border-radius: 18px;
-    }
-
-    .carousel-caption {
-        font-size: 14px;
-        margin-top: 12px;
-    }
-
-    .carousel-dots {
-        margin-top: 10px;
-    }
-
-    .carousel-arrow {
-        width: 38px;
-        height: 38px;
-        font-size: 22px;
-    }
-
-        .carousel-arrow.prev {
-            left: 8px;
+    /* -------------------- TABLET -------------------- */
+    @media (max-width: 1024px) {
+        .container {
+            width: 88%;
+            align-items: center;
         }
 
-        .carousel-arrow.next {
-            right: 8px;
+        .carousel-box {
+            width: 100%;
         }
 
-    .portfolio-text {
-        width: 100%;
-        align-items: center;
+        .hero {
+            gap: 30px;
+        }
+
+        .title h1 {
+            font-size: 40px;
+        }
+
+        .title p {
+            font-size: 22px;
+        }
+
+        .software-item {
+            width: 100px;
+            height: 100px;
+            padding: 12px;
+        }
+
+        .portfolio-content {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            padding-left: 0;
+            padding-bottom: 30px;
+            gap: 20px;
+        }
+
+        .portfolio-text {
+            width: 100%;
+            align-items: center;
+        }
+
+            .portfolio-text p {
+                text-align: center;
+            }
+
+        .card-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        #card1, #card2, #card3, #card4, #card5, #card6 {
+            grid-column: span 1;
+        }
     }
 
-        .portfolio-text p {
+    /* -------------------- MOBILE -------------------- */
+    @media (max-width: 768px) {
+        html, body {
+            padding-top: 0;
+        }
+
+        body {
+            background: #FFF3EC;
+        }
+
+        .container {
+            width: 92%;
+        }
+
+        /* HEADER */
+        .header {
+            position: static;
+            flex-direction: column;
+            gap: 12px;
+            padding: 18px 16px 14px 16px;
+            text-align: center;
+        }
+
+        .logo {
+            justify-content: center;
+            gap: 10px;
+            font-size: 17px;
+            flex-wrap: wrap;
+        }
+
+        .logo-img {
+            height: 34px;
+        }
+
+        .menu {
+            width: 100%;
+        }
+
+        .menu-title {
             font-size: 16px;
-            line-height: 1.6;
-            text-align: left;
-            margin-bottom: 14px;
         }
 
-    /* CARDS */
-    .card-grid {
-        grid-template-columns: 1fr;
-        gap: 18px;
-        padding: 10px 0 30px 0;
+        .menu .dropdown {
+            position: static;
+            transform: none;
+            margin-top: 8px;
+            min-width: unset;
+            width: 100%;
+            border-radius: 12px;
+        }
+
+        /* HERO */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            padding: 20px 0 0 0;
+            gap: 12px;
+        }
+
+        .title {
+            order: 1;
+            width: 100%;
+            padding: 0;
+            text-align: center;
+        }
+
+            .title h1 {
+                font-size: 34px;
+                line-height: 1.1;
+                letter-spacing: 1px;
+            }
+
+            .title p {
+                margin-top: 10px;
+                font-size: 20px;
+            }
+
+        .about {
+            order: 2;
+            width: 100%;
+            padding: 0;
+        }
+
+            .about h2 {
+                font-size: 26px;
+                margin-bottom: 14px;
+            }
+
+            .about p {
+                font-size: 15px;
+                line-height: 1.7;
+                text-align: left;
+            }
+
+        /* CONTACT */
+        .contact {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 18px;
+            padding: 18px 0 24px 0;
+        }
+
+        .info-wrapper {
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .extra-icon {
+            height: 72px;
+        }
+
+        .info {
+            text-align: center;
+        }
+
+            .info p {
+                font-size: 15px;
+                line-height: 1.6;
+            }
+
+        .btn {
+            width: 100%;
+            max-width: 280px;
+            padding: 12px 20px;
+            font-size: 16px;
+        }
+
+        /* SECTIONS */
+        .showcase-section,
+        .projects {
+            padding-top: 0;
+        }
+
+            .showcase-section h2,
+            .proficiency-wrapper h2,
+            .portfolio-preview h2 {
+                font-size: 28px;
+                padding: 24px 0 18px 0;
+                margin-bottom: 10px;
+            }
+
+        hr {
+            margin: 12px 0;
+        }
+
+        .software-item {
+            width: 82px;
+            height: 82px;
+            padding: 10px;
+            border-radius: 14px;
+        }
+
+        .software-track {
+            gap: 14px;
+        }
+
+        .software-item img {
+            width: 58px;
+            height: 58px;
+        }
+
+        .carousel-box {
+            width: 100%;
+        }
+
+        .carousel {
+            border-radius: 18px;
+        }
+
+        .carousel-caption {
+            font-size: 14px;
+            margin-top: 12px;
+        }
+
+        .carousel-dots {
+            margin-top: 10px;
+        }
+
+        .carousel-arrow {
+            width: 38px;
+            height: 38px;
+            font-size: 22px;
+        }
+
+            .carousel-arrow.prev {
+                left: 8px;
+            }
+
+            .carousel-arrow.next {
+                right: 8px;
+            }
+
+        .portfolio-text {
+            width: 100%;
+            align-items: center;
+        }
+
+            .portfolio-text p {
+                font-size: 16px;
+                line-height: 1.6;
+                text-align: left;
+                margin-bottom: 14px;
+            }
+
+        /* CARDS */
+        .card-grid {
+            grid-template-columns: 1fr;
+            gap: 18px;
+            padding: 10px 0 30px 0;
+        }
+
+        #card1, #card2, #card3, #card4, #card5, #card6 {
+            grid-column: auto;
+        }
+
+        .card {
+            border-radius: 18px;
+        }
+
+        .overlay span {
+            font-size: 20px;
+            letter-spacing: 1px;
+            text-align: center;
+            padding: 0 12px;
+        }
+
+        .card-wrapper {
+            flex: 0 0 85%;
+        }
     }
 
-    #card1, #card2, #card3, #card4, #card5, #card6 {
-        grid-column: auto;
-    }
+    /* -------------------- SMALL MOBILE -------------------- */
+    @media (max-width: 480px) {
+        .logo {
+            font-size: 15px;
+        }
 
-    .card {
-        border-radius: 18px;
-    }
+        .title h1 {
+            font-size: 29px;
+        }
 
-    .overlay span {
-        font-size: 20px;
-        letter-spacing: 1px;
-        text-align: center;
-        padding: 0 12px;
-    }
+        .title p {
+            font-size: 18px;
+        }
 
-}
+        .about h2,
+        .showcase-section h2,
+        .proficiency-wrapper h2,
+        .portfolio-preview h2 {
+            font-size: 24px;
+        }
 
-/* -------------------- SMALL MOBILE -------------------- */
-@media (max-width: 480px) {
-    .logo {
-        font-size: 15px;
-    }
+        .about p,
+        .portfolio-text p,
+        .info p {
+            font-size: 14px;
+        }
 
-    .title h1 {
-        font-size: 29px;
-    }
+        .software-item {
+            width: 72px;
+            height: 72px;
+            padding: 8px;
+        }
 
-    .title p {
-        font-size: 18px;
-    }
+            .software-item img {
+                width: 54px;
+                height: 54px;
+            }
 
-    .about h2,
-    .showcase-section h2,
-    .proficiency-wrapper h2,
-    .portfolio-preview h2 {
-        font-size: 24px;
-    }
+        .carousel-arrow {
+            width: 34px;
+            height: 34px;
+            font-size: 20px;
+        }
 
-    .about p,
-    .portfolio-text p,
-    .info p {
-        font-size: 14px;
-    }
+        .btn {
+            font-size: 15px;
+        }
 
-    .software-item {
-        width: 72px;
-        height: 72px;
-        padding: 8px;
+        .overlay span {
+            font-size: 18px;
+        }
     }
-    
-    .software-item img {
-        width: 54px;
-        height: 54px;
-    }
-
-    .carousel-arrow {
-        width: 34px;
-        height: 34px;
-        font-size: 20px;
-    }
-
-    .btn {
-        font-size: 15px;
-    }
-
-    .overlay span {
-        font-size: 18px;
-    }
-
 }

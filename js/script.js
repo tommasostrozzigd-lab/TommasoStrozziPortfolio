@@ -105,6 +105,9 @@
 
     function nextSlide() {
         if (isDragging || isAnimating) return;
+
+        resetIdleTimer(); // al posto di restartAutoPlay
+
         index++;
         lockDrag();
         setPosition(true);
@@ -112,6 +115,9 @@
 
     function prevSlide() {
         if (isDragging || isAnimating) return;
+
+        resetIdleTimer(); // al posto di restartAutoPlay
+
         index--;
         lockDrag();
         setPosition(true);
@@ -136,9 +142,12 @@
         if (isAnimating) return;
 
         isDragging = true;
+        resetIdleTimer(); // 👈
         startX = getX(e);
 
+        startX = getX(e);
         track.style.transition = "none";
+
         setIframesPointerEvents(false);
     }
 
@@ -172,6 +181,8 @@
         else setPosition(true);
 
         setIframesPointerEvents(true);
+
+        resetIdleTimer(); // 👈
     }
 
     window.addEventListener("mouseup", endDrag);
@@ -211,6 +222,9 @@
     dots.forEach((dot, i) => {
         dot.addEventListener("click", () => {
             if (isDragging) return;
+
+            resetIdleTimer(); // al posto di restartAutoPlay
+
             index = i + 1;
             setPosition(true);
         });
@@ -219,6 +233,62 @@
     window.addEventListener("resize", () => setPosition(false));
 
     setPosition(false);
+
+    /* =========================
+       SMART AUTOPLAY (PRO)
+    ========================= */
+
+    let autoPlayInterval = null;
+    let idleTimer = null;
+
+    const AUTO_DELAY = 3000;
+    const IDLE_DELAY = 1500;
+
+    function startAutoPlay() {
+        if (autoPlayInterval) return;
+
+        autoPlayInterval = setInterval(() => {
+            if (!isDragging && !isAnimating) {
+                nextSlide();
+            }
+        }, AUTO_DELAY);
+    }
+
+    function stopAutoPlay() {
+        clearInterval(autoPlayInterval);
+        autoPlayInterval = null;
+    }
+
+    function resetIdleTimer() {
+        clearTimeout(idleTimer);
+
+        stopAutoPlay();
+
+        idleTimer = setTimeout(() => {
+            startAutoPlay();
+        }, IDLE_DELAY);
+    }
+
+    /* avvio iniziale */
+    resetIdleTimer();
+
+    carousel.addEventListener("mouseenter", stopAutoPlay);
+    carousel.addEventListener("mouseleave", resetIdleTimer);
+
+    carousel.addEventListener("touchstart", stopAutoPlay);
+    carousel.addEventListener("touchend", resetIdleTimer);
+
+    document.addEventListener("visibilitychange", () => {
+        if (document.hidden) {
+            stopAutoPlay();
+        } else {
+            resetIdleTimer();
+        }
+    });
+
+    /* =========================
+       MODAL FIX (CLICK OUTSIDE CLOSE)
+    ========================= */
 
     let modalIndex = 0;
 
@@ -270,38 +340,63 @@
     const softTrack = document.getElementById("softwareTrack");
 
     if (slider && softTrack) {
+
+        // clone per loop infinito
         softTrack.innerHTML += softTrack.innerHTML;
 
         let position = 0;
-        let autoSpeed = 0.45;
-        let currentVelocity = 0;
-        let isSoftDragging = false;
 
+        // fisica movimento
+        let velocity = 0;
+        let autoSpeed = 0.75;
+        let friction = 0.92;
+        let minVelocity = 0.02;
+
+        // drag state
+        let isDragging = false;
         let startX = 0;
         let startPosition = 0;
 
+        // timing sicurezza
         let lastX = 0;
         let lastTime = 0;
 
-        const friction = 0.92;
-        const minVelocity = 0.01;
+        let lastInteraction = 0;
+        const INTERACTION_COOLDOWN = 800;
 
         function halfWidth() {
             return softTrack.scrollWidth / 2;
         }
 
         function normalize() {
-            const hw = halfWidth();
-            if (position > 0) position -= hw;
-            if (Math.abs(position) >= hw) position += hw;
+            const w = halfWidth();
+
+            if (position > 0) position -= w;
+            if (position < -w) position += w;
         }
 
+        // =========================
+        // ANIMATION LOOP
+        // =========================
         function animate() {
-            if (!isSoftDragging) {
-                if (Math.abs(currentVelocity) > minVelocity) {
-                    position += currentVelocity;
-                    currentVelocity *= friction;
-                } else {
+            if (!isDragging) {
+
+                const now = performance.now();
+                const recentlyUsed = now - lastInteraction < INTERACTION_COOLDOWN;
+
+                // INERTIA (priorità assoluta)
+                if (Math.abs(velocity) > minVelocity) {
+
+                    position += velocity;
+                    velocity *= friction;
+
+                    if (Math.abs(velocity) < 0.01) {
+                        velocity = 0;
+                    }
+
+                }
+                // AUTO SCROLL SOLO SE FERMO E NON RECENTE INTERAZIONE
+                else if (!recentlyUsed) {
                     position -= autoSpeed;
                 }
 
@@ -314,39 +409,66 @@
 
         animate();
 
+        // =========================
+        // DRAG START
+        // =========================
         function start(x) {
-            isSoftDragging = true;
+            isDragging = true;
+
             startX = x;
             startPosition = position;
 
             lastX = x;
-            lastTime = Date.now();
-            currentVelocity = 0;
+            lastTime = performance.now();
+
+            velocity = 0; // reset inertia controllato
+
+            lastInteraction = performance.now();
         }
 
+        // =========================
+        // DRAG MOVE
+        // =========================
         function move(x) {
-            if (!isSoftDragging) return;
+            if (!isDragging) return;
 
-            const now = Date.now();
-            const dx = x - lastX;
-            const dt = now - lastTime || 1;
-
-            currentVelocity = (dx / dt) * 16;
-
+            const now = performance.now();
             const delta = x - startX;
+
             position = startPosition + delta;
 
+            // calcolo velocità per inertia
+            const dt = now - lastTime;
+
+            if (dt > 0) {
+                velocity = (x - lastX) / dt * 16;
+            }
+
+            lastX = x;
+            lastTime = now;
+
             normalize();
+
             softTrack.style.transform = `translateX(${position}px)`;
 
             lastX = x;
             lastTime = now;
         }
 
+        // =========================
+        // DRAG END
+        // =========================
         function end() {
-            isSoftDragging = false;
+            if (!isDragging) return;
+
+            isDragging = false;
+
+            lastInteraction = performance.now();
         }
 
+        // =========================
+        // EVENTS
+        // =========================
         slider.addEventListener("mousedown", e => start(e.clientX));
         window.addEventListener("mousemove", e => move(e.clientX));
         window.addEventListener("mouseup", end);
@@ -356,4 +478,183 @@
         window.addEventListener("touchend", end);
     }
 
+    const cardsSlider = document.getElementById("cardsSlider");
+    const cardsTrack = document.getElementById("cardsTrack");
+
+    if (cardsSlider && cardsTrack) {
+
+        // clone per loop infinito
+        cardsTrack.innerHTML += cardsTrack.innerHTML;
+
+        let position = 0;
+        let velocity = 0;
+        let autoSpeed = 0.4;
+
+        let isDragging = false;
+        let hasDragged = false;
+
+        let startX = 0;
+        let startPos = 0;
+
+        let lastX = 0;
+        let lastTime = 0;
+
+        let dragThreshold = 5;
+
+        let trackWidth = 0;
+
+        const friction = 0.92;
+        const minVelocity = 0.02;
+
+        function updateWidth() {
+            const oldWidth = trackWidth;
+
+            trackWidth = cardsTrack.scrollWidth / 2;
+
+            // evita drift quando cambia layout
+            if (oldWidth) {
+                position = ((position % trackWidth) + trackWidth) % trackWidth;
+                position = -position;
+            }
+        }
+
+        function normalize() {
+            const w = trackWidth;
+
+            if (!w) return;
+
+            if (position < -w) position += w;
+            if (position > 0) position -= w;
+        }
+
+        function animate() {
+            if (!isDragging) {
+
+                if (Math.abs(velocity) > minVelocity) {
+                    position += velocity;
+                    velocity *= friction;
+                } else {
+                    position -= autoSpeed;
+                }
+
+                normalize();
+
+                cardsTrack.style.transform = `translateX(${position}px)`;
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        updateWidth();
+        animate();
+
+        window.addEventListener("resize", updateWidth);
+        window.addEventListener("load", updateWidth);
+
+        // osserva cambi layout reali (FONDAMENTALE)
+        const ro = new ResizeObserver(() => {
+            updateWidth();
+        });
+        ro.observe(cardsTrack);
+
+        // aggiorna quando immagini caricano
+        cardsTrack.querySelectorAll("img").forEach(img => {
+            if (!img.complete) {
+                img.addEventListener("load", updateWidth);
+            }
+        });
+
+        // ---------------- DRAG ----------------
+
+        function start(x) {
+            isDragging = true;
+            hasDragged = false;
+
+            startX = x;
+            startPos = position;
+
+            lastX = x;
+            lastTime = performance.now();
+
+            velocity = 0;
+
+            cardsTrack.classList.add("dragging");
+        }
+
+        function move(x) {
+            if (!isDragging) return;
+
+            const delta = x - startX;
+
+            if (Math.abs(delta) > dragThreshold) {
+                hasDragged = true;
+            }
+
+            position = startPos + delta;
+
+            const now = performance.now();
+
+            if (now - lastTime > 0) {
+                velocity = (x - lastX) / (now - lastTime) * 16;
+            }
+
+            lastX = x;
+            lastTime = now;
+
+            normalize();
+
+            cardsTrack.style.transform = `translateX(${position}px)`;
+        }
+
+        function end() {
+            if (!isDragging) return;
+
+            isDragging = false;
+
+            setTimeout(() => {
+                cardsTrack.classList.remove("dragging");
+            }, 50);
+        }
+
+        function cancelDrag() {
+            if (!isDragging) return;
+            isDragging = false;
+
+            setTimeout(() => {
+                cardsTrack.classList.remove("dragging");
+            }, 50);
+        }
+
+        // EVENTS SAFE
+        document.addEventListener("visibilitychange", () => {
+            if (document.hidden) cancelDrag();
+        });
+
+        window.addEventListener("blur", cancelDrag);
+        window.addEventListener("touchcancel", cancelDrag);
+        window.addEventListener("pointercancel", cancelDrag);
+        window.addEventListener("mouseleave", cancelDrag);
+
+        // mouse + touch
+        cardsSlider.addEventListener("mousedown", e => start(e.clientX));
+        window.addEventListener("mousemove", e => move(e.clientX));
+        window.addEventListener("mouseup", end);
+
+        cardsSlider.addEventListener("touchstart", e => start(e.touches[0].clientX), { passive: true });
+        window.addEventListener("touchmove", e => move(e.touches[0].clientX), { passive: true });
+        window.addEventListener("touchend", end);
+
+        cardsTrack.addEventListener("dragstart", (e) => {
+            e.preventDefault();
+        });
+
+        // BLOCCO CLICK SOLO SE C'È DRAG VERO
+        cardsTrack.addEventListener("click", (e) => {
+            if (hasDragged) {
+                e.preventDefault();
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+            }
+        });
+    }
 });
