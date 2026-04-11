@@ -660,22 +660,22 @@ html, body {
         user-drag: none;
     }
 
-.card:hover {
-    transform: translateY(-6px) scale(1.03);
-    box-shadow: 0 14px 30px rgba(0,0,0,0.18);
-}
+    .card:hover {
+        transform: translateY(-6px) scale(1.03);
+        box-shadow: 0 14px 30px rgba(0,0,0,0.18);
+    }
 
-.card img {
-    width: 100%;
-    height: auto;
-    display: block;
-    transition: transform 0.4s ease, filter 0.4s ease;
-}
+    .card img {
+        width: 100%;
+        height: auto;
+        display: block;
+        transition: transform 0.4s ease, filter 0.4s ease;
+    }
 
-.card:hover img {
-    transform: scale(1.08);
-    filter: brightness(0.85);
-}
+    .card:hover img {
+        transform: scale(1.08);
+        filter: brightness(0.85);
+    }
 
 .overlay {
     position: absolute;
@@ -689,49 +689,40 @@ html, body {
     text-align: center;
 }
 
-.overlay span {
-    color: #EB7831;
-    font-size: 26px;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    letter-spacing: clamp(1px, 0.35cqw, 2px);
-    line-height: 1.15;
-    text-transform: uppercase;
-    opacity: 0;
-    transition: opacity 0.4s ease;
-}
+    .overlay span {
+        color: #EB7831;
+        font-size: 26px;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 700;
+        letter-spacing: clamp(1px, 0.35cqw, 2px);
+        line-height: 1.15;
+        text-transform: uppercase;
+        opacity: 0;
+        transition: opacity 0.4s ease;
+    }
 
 .card:hover .overlay {
     background: rgba(255,243,236,0.9);
 }
 
-.card:hover .overlay span {
-    opacity: 1;
-}
+    .card:hover .overlay span {
+        opacity: 1;
+    }
 
-/* SLIDER */
+/* =========================
+   SLIDER
+========================= */
+
 .cards-slider {
     width: 80%;
     margin: 0 auto;
     overflow: hidden;
     position: relative;
-
-    -webkit-mask-image: linear-gradient(
-        to right,
-        transparent 0%,
-        black 10%,
-        black 90%,
-        transparent 100%
-    );
-    mask-image: linear-gradient(
-        to right,
-        transparent 0%,
-        black 10%,
-        black 90%,
-        transparent 100%
-    );
-
+    -webkit-mask-image: linear-gradient( to right, transparent 0%, black 10%, black 90%, transparent 100% );
+    mask-image: linear-gradient( to right, transparent 0%, black 10%, black 90%, transparent 100% );
     cursor: grab;
+    /* 🔥 FIX IMPORTANTISSIMO */
+    touch-action: pan-y; /* permette scroll verticale ma non rompe drag orizzontale */
 }
 
 .cards-track {
@@ -739,16 +730,18 @@ html, body {
     gap: 24px;
     align-items: stretch;
     will-change: transform;
-
+    /* 🔥 FIX: evita selezione testo/immagini durante drag */
+    user-select: none;
+    -webkit-user-select: none;
 }
+
+    .cards-track.dragging {
+        cursor: grabbing;
+    }
 
 .card-wrapper {
     flex: 0 0 300px;
     transition: transform 0.35s ease, opacity 0.35s ease;
-}
-
-.cards-track.dragging {
-    cursor: grabbing;
 }
 
 .cards-slider .overlay span {
@@ -758,21 +751,65 @@ html, body {
     padding: 0 10px;
 }
 
+/* 🔥 FIX: evita blocco click da overlay */
+.overlay {
+    pointer-events: none;
+}
+
+/* 🔥 BLOCCA DRAG NATIVO IMMAGINI */
+.cards-track img {
+    -webkit-user-drag: none;
+    user-select: none;
+    pointer-events: none;
+}
+
+.card-wrapper,
+.card-wrapper a,
+.card {
+    -webkit-user-drag: none;
+    user-select: none;
+}
+
+    /* 🔥 blocca drag nativo su link */
+    .card-wrapper a {
+        pointer-events: auto;
+    }
+    .cards-track {
+    touch-action: pan-y;
+    pointer-events: auto;
+}
+
+.card-wrapper a {
+    position: relative;
+    z-index: 2;
+}
+
 /* RESPONSIVE */
 @media (max-width: 1910px) {
-    .card-wrapper { flex: 0 0 280px; }
+    .card-wrapper {
+        flex: 0 0 280px;
+    }
 }
 
 @media (max-width: 1024px) {
-    .card-wrapper { flex: 0 0 230px; }
+    .card-wrapper {
+        flex: 0 0 230px;
+    }
 }
 
 @media (max-width: 768px) {
-    .cards-slider { width: 92%; }
-    .cards-track { gap: 14px; }
-    .card-wrapper { flex: 0 0 80%; }
-}
+    .cards-slider {
+        width: 92%;
+    }
 
+    .cards-track {
+        gap: 14px;
+    }
+
+    .card-wrapper {
+        flex: 0 0 80%;
+    }
+}
 
 /* -------------------- GRID -------------------- */
 .card-grid {
