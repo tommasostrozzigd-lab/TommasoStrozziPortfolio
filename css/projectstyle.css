@@ -390,6 +390,14 @@ body {
         display: block;
     }
 
+    .carousel-slide img {
+        -webkit-user-drag: none;
+        user-drag: none;
+        user-select: none;
+        -webkit-user-select: none;
+        pointer-events: auto;
+    }
+
 .carousel-dots {
     display: flex;
     justify-content: center;

@@ -59,9 +59,10 @@
 
     if (!carousel || !track) return;
 
+    /* ===================== CLONES ===================== */
+
     const slides = Array.from(track.querySelectorAll(".carousel-slide"));
     const total = slides.length;
-    if (!total) return;
 
     const firstClone = slides[0].cloneNode(true);
     const lastClone = slides[total - 1].cloneNode(true);
@@ -74,13 +75,20 @@
 
     const allSlides = Array.from(track.querySelectorAll(".carousel-slide"));
 
+    /* ===================== STATE ===================== */
+
     let index = 1;
+
     let isDragging = false;
     let isAnimating = false;
 
     let startX = 0;
-    let currentTranslate = 0;
+    let currentX = 0;
     let prevTranslate = 0;
+
+    const DRAG_THRESHOLD = 5;
+
+    /* ===================== HELPERS ===================== */
 
     function getWidth() {
         return carousel.clientWidth;
@@ -96,10 +104,10 @@
     function setPosition(animated = true) {
         track.style.transition = animated ? "transform 0.45s ease" : "none";
 
-        currentTranslate = -index * getWidth();
-        prevTranslate = currentTranslate;
+        prevTranslate = -index * getWidth();
+        currentX = prevTranslate;
 
-        track.style.transform = `translateX(${currentTranslate}px)`;
+        track.style.transform = `translateX(${currentX}px)`;
 
         dots.forEach((d, i) => d.classList.toggle("active", i === realIndex()));
 
@@ -108,30 +116,30 @@
         }
     }
 
-    function lockDrag() {
+    function lockAnimation() {
         isAnimating = true;
-        setTimeout(() => isAnimating = false, 450);
+        setTimeout(() => (isAnimating = false), 450);
     }
 
+    /* ===================== NAV ===================== */
+
     function nextSlide() {
-        if (isDragging || isAnimating) return;
-
-        resetIdleTimer();
-
+        if (isAnimating) return;
         index++;
-        lockDrag();
+        lockAnimation();
         setPosition(true);
+        resetIdleTimer();
     }
 
     function prevSlide() {
-        if (isDragging || isAnimating) return;
-
-        resetIdleTimer();
-
+        if (isAnimating) return;
         index--;
-        lockDrag();
+        lockAnimation();
         setPosition(true);
+        resetIdleTimer();
     }
+
+    /* ===================== LOOP FIX ===================== */
 
     track.addEventListener("transitionend", () => {
         if (allSlides[index].classList.contains("clone")) {
@@ -144,94 +152,73 @@
         }
     });
 
+    /* ===================== DRAG ===================== */
+
     function getX(e) {
-        return e.touches ? e.touches[0].clientX : e.clientX;
+        return e.clientX;
     }
 
-    function startDrag(e) {
+    function onDown(e) {
         if (isAnimating) return;
 
         isDragging = true;
-        resetIdleTimer();
         startX = getX(e);
 
         track.style.transition = "none";
-        setIframesPointerEvents(false);
     }
 
-    function moveDrag(e) {
+    function onMove(e) {
         if (!isDragging) return;
 
-        const delta = getX(e) - startX;
-        const width = getWidth();
-        const maxDrag = width * 0.9;
+        const dx = getX(e) - startX;
 
-        const raw = prevTranslate + delta;
+        currentX = prevTranslate + dx;
 
-        currentTranslate = Math.max(
-            prevTranslate - maxDrag,
-            Math.min(prevTranslate + maxDrag, raw)
+        const max = getWidth() * 0.9;
+
+        currentX = Math.max(
+            prevTranslate - max,
+            Math.min(prevTranslate + max, currentX)
         );
 
-        track.style.transform = `translateX(${currentTranslate}px)`;
+        track.style.transform = `translateX(${currentX}px)`;
     }
 
-    function endDrag() {
+    function onUp() {
         if (!isDragging) return;
 
         isDragging = false;
 
-        const moved = currentTranslate - prevTranslate;
+        const moved = currentX - prevTranslate;
         const threshold = getWidth() * 0.2;
 
-        if (moved < -threshold) nextSlide();
-        else if (moved > threshold) prevSlide();
-        else setPosition(true);
+        if (Math.abs(moved) < DRAG_THRESHOLD) {
+            openModal(realIndex());
+        } else if (moved < -threshold) {
+            nextSlide();
+        } else if (moved > threshold) {
+            prevSlide();
+        } else {
+            setPosition(true);
+        }
 
-        setIframesPointerEvents(true);
         resetIdleTimer();
     }
 
-    window.addEventListener("mouseup", endDrag);
-    window.addEventListener("touchend", endDrag);
+    /* ===================== EVENTS ===================== */
 
-    carousel.addEventListener("mousedown", startDrag);
-    window.addEventListener("mousemove", moveDrag);
+    carousel.addEventListener("pointerdown", onDown);
+    window.addEventListener("pointermove", onMove);
+    window.addEventListener("pointerup", onUp);
+    window.addEventListener("pointercancel", onUp);
 
-    carousel.addEventListener("touchstart", startDrag, { passive: true });
-    window.addEventListener("touchmove", moveDrag, { passive: true });
-
-    const iframes = document.querySelectorAll("iframe");
-
-    function setIframesPointerEvents(state) {
-        iframes.forEach(frame => {
-            frame.style.pointerEvents = state ? "auto" : "none";
-        });
-    }
-
-    slides.forEach((slide, i) => {
-        const img = slide.querySelector("img");
-        if (!img) return;
-
-        img.setAttribute("draggable", "false");
-        img.style.userSelect = "none";
-
-        img.addEventListener("dragstart", e => e.preventDefault());
-
-        img.addEventListener("click", () => {
-            if (!isDragging && !isAnimating) openModal(i);
-        });
-    });
+    /* ===================== CONTROLS ===================== */
 
     nextButton?.addEventListener("click", nextSlide);
     prevButton?.addEventListener("click", prevSlide);
 
     dots.forEach((dot, i) => {
         dot.addEventListener("click", () => {
-            if (isDragging) return;
-
-            resetIdleTimer();
-
             index = i + 1;
             setPosition(true);
         });
@@ -241,10 +228,7 @@
 
     setPosition(false);
 
-
-    /* =========================
-       SMART AUTOPLAY
-    ========================= */
+    /* ===================== AUTOPLAY (RIPRISTINATO) ===================== */
 
     let autoPlayInterval = null;
     let idleTimer = null;
@@ -253,10 +237,10 @@
     const IDLE_DELAY = 1500;
 
     function startAutoPlay() {
-        if (autoPlayInterval || pageHidden) return;
+        if (autoPlayInterval) return;
 
         autoPlayInterval = setInterval(() => {
-            if (!isDragging && !isAnimating && !pageHidden) {
+            if (!isDragging && !isAnimating) {
                 nextSlide();
             }
         }, AUTO_DELAY);
@@ -280,24 +264,10 @@
 
     carousel.addEventListener("mouseenter", stopAutoPlay);
     carousel.addEventListener("mouseleave", resetIdleTimer);
-
     carousel.addEventListener("touchstart", stopAutoPlay);
     carousel.addEventListener("touchend", resetIdleTimer);
 
-    document.addEventListener("visibilitychange", () => {
-        if (document.hidden) {
-            stopAutoPlay();
-            isAnimating = false;
-        } else {
-            resetIdleTimer();
-            setPosition(false);
-        }
-    });
-
-
-    /* =========================
-       MODAL
-    ========================= */
+    /* ===================== MODAL ===================== */
 
     let modalIndex = 0;
 
@@ -316,7 +286,7 @@
         modalImg.src = slides[modalIndex].querySelector("img").src;
     }
 
-    function prevImage() {
+    function prevImageModal() {
         modalIndex = (modalIndex - 1 + total) % total;
         modalImg.src = slides[modalIndex].querySelector("img").src;
     }
@@ -327,17 +297,15 @@
         if (e.target === modal) closeModalFn();
     });
 
-    modalImg?.addEventListener("click", e => e.stopPropagation());
-
     modalNext?.addEventListener("click", nextImage);
-    modalPrev?.addEventListener("click", prevImage);
+    modalPrev?.addEventListener("click", prevImageModal);
 
-    document.addEventListener("keydown", e => {
+    document.addEventListener("keydown", (e) => {
         if (!modal.classList.contains("active")) return;
 
         if (e.key === "Escape") closeModalFn();
         if (e.key === "ArrowRight") nextImage();
-        if (e.key === "ArrowLeft") prevImage();
+        if (e.key === "ArrowLeft") prevImageModal();
     });
 
 
@@ -350,6 +318,7 @@
 
     if (slider && softTrack) {
 
+        // Duplica contenuto per effetto infinito
         softTrack.innerHTML += softTrack.innerHTML;
 
         let position = 0;
@@ -364,9 +333,6 @@
 
         let lastX = 0;
         let lastTime = 0;
-
-        let lastInteraction = 0;
-        const INTERACTION_COOLDOWN = 800;
 
         function halfWidth() {
             return softTrack.scrollWidth / 2;
@@ -386,15 +352,15 @@
 
             if (!isDragging) {
 
-                const now = performance.now();
-                const recentlyUsed = now - lastInteraction < INTERACTION_COOLDOWN;
-
+                // Inerzia
                 if (Math.abs(velocity) > minVelocity) {
                     position += velocity;
                     velocity *= friction;
 
                     if (Math.abs(velocity) < 0.01) velocity = 0;
-                } else if (!recentlyUsed) {
+                }
+                // Autoscroll sempre attivo (senza cooldown)
+                else {
                     position -= autoSpeed;
                 }
 
@@ -416,7 +382,6 @@
             lastTime = performance.now();
 
             velocity = 0;
-            lastInteraction = performance.now();
         }
 
         function move(x) {
@@ -439,19 +404,18 @@
 
         function end() {
             isDragging = false;
-            lastInteraction = performance.now();
         }
 
+        // Mouse events
         slider.addEventListener("mousedown", e => start(e.clientX));
         window.addEventListener("mousemove", e => move(e.clientX));
         window.addEventListener("mouseup", end);
 
+        // Touch events
         slider.addEventListener("touchstart", e => start(e.touches[0].clientX), { passive: true });
         window.addEventListener("touchmove", e => move(e.touches[0].clientX), { passive: true });
         window.addEventListener("touchend", end);
     }
-
-
     /* =========================
        CARDS SLIDER FIX
     ========================= */

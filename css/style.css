@@ -412,6 +412,14 @@ html, body {
         display: block;
     }
 
+    .carousel-slide img {
+        -webkit-user-drag: none;
+        user-drag: none;
+        user-select: none;
+        -webkit-user-select: none;
+        pointer-events: auto;
+    }
+
 .carousel-caption {
     text-align: center;
     font-size: 13px;
@@ -789,11 +797,19 @@ html, body {
     .card-wrapper {
         flex: 0 0 280px;
     }
+
+    .cards-slider .overlay span {
+        font-size: clamp(12px, 6cqw, 16px);
+    }
 }
 
 @media (max-width: 1024px) {
     .card-wrapper {
         flex: 0 0 230px;
+    }
+
+    .cards-slider .overlay span {
+        font-size: 12px;
     }
 }
 
@@ -808,6 +824,10 @@ html, body {
 
     .card-wrapper {
         flex: 0 0 80%;
+    }
+
+    .cards-slider .overlay span {
+        font-size: clamp(12px, 6cqw, 22px);
     }
 }
 
