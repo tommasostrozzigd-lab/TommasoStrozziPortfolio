@@ -9,6 +9,9 @@
         pageHidden = document.hidden;
     });
 
+    /* helper usato dai componenti che usano rAF */
+    function isPageHidden() { return pageHidden; }
+
 
     /* =========================
        MENU DROPDOWN SAFE
@@ -118,7 +121,7 @@
 
     function lockAnimation() {
         isAnimating = true;
-        setTimeout(() => (isAnimating = false), 450);
+        // sbloccato da transitionend, non da un timeout arbitrario
     }
 
     /* ===================== NAV ===================== */
@@ -141,7 +144,12 @@
 
     /* ===================== LOOP FIX ===================== */
 
-    track.addEventListener("transitionend", () => {
+    track.addEventListener("transitionend", (e) => {
+        // Ignora transizioni su proprietà diverse da transform (es. opacity su img)
+        if (e.propertyName !== "transform" || e.target !== track) return;
+
+        isAnimating = false;
+
         if (allSlides[index].classList.contains("clone")) {
             track.style.transition = "none";
 
@@ -164,6 +172,7 @@
         isDragging = true;
         startX = getX(e);
 
+        carousel.setPointerCapture(e.pointerId);
         track.style.transition = "none";
     }
 
@@ -184,10 +193,12 @@
         track.style.transform = `translateX(${currentX}px)`;
     }
 
-    function onUp() {
+    function onUp(e) {
         if (!isDragging) return;
 
         isDragging = false;
+
+        try { carousel.releasePointerCapture(e.pointerId); } catch (_) { }
 
         const moved = currentX - prevTranslate;
         const threshold = getWidth() * 0.2;
@@ -208,11 +219,14 @@
     /* ===================== EVENTS ===================== */
 
     carousel.addEventListener("pointerdown", onDown);
-    window.addEventListener("pointermove", onMove);
-    window.addEventListener("pointerup", onUp);
-    window.addEventListener("pointercancel", onUp);
+    carousel.addEventListener("pointermove", onMove);
+    carousel.addEventListener("pointerup", onUp);
+    carousel.addEventListener("pointercancel", onUp);
 
     /* ===================== CONTROLS ===================== */
+
+    nextButton?.addEventListener("pointerdown", e => e.stopPropagation());
+    prevButton?.addEventListener("pointerdown", e => e.stopPropagation());
 
     nextButton?.addEventListener("click", nextSlide);
     prevButton?.addEventListener("click", prevSlide);
@@ -266,6 +280,31 @@
     carousel.addEventListener("mouseleave", resetIdleTimer);
     carousel.addEventListener("touchstart", stopAutoPlay);
     carousel.addEventListener("touchend", resetIdleTimer);
+
+    /* ===================== TAB VISIBILITY FIX =====================
+       Quando la tab va in background i browser possono interrompere
+       le transizioni CSS → transitionend non scatta mai → index rimane
+       su un clone → immagine bianca al ritorno.
+       Fix: pausiamo l'autoplay sull'uscita e normalizziamo index al rientro.
+    ================================================================ */
+    document.addEventListener("visibilitychange", () => {
+        if (document.hidden) {
+            // Ferma tutto mentre siamo in background
+            stopAutoPlay();
+            clearTimeout(idleTimer);
+        } else {
+            // La transizione potrebbe non essere mai scattata:
+            // forziamo la normalizzazione di index prima di ridisegnare
+            if (index === 0) index = total;
+            else if (index === total + 1) index = 1;
+
+            // Resetta posizione senza animazione (nessun flash)
+            setPosition(false);
+
+            // Riprende l'autoplay dopo la pausa normale
+            resetIdleTimer();
+        }
+    });
 
     /* ===================== MODAL ===================== */
 
